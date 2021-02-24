@@ -12,5 +12,9 @@
 		"react-dom": "^16.8.6",
 		"swr": "^0.1.18"
 	},
-	"license": "MIT"
+	"license": "MIT",
+	"engines": {
+		"node": "12.20.2",
+		"npm": "6.14.11"
+	  }
 }
