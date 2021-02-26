@@ -1,6 +1,5 @@
 import { Repository } from './Repository';
-
-const TABLE = 'searches';
+import { TableName } from '../tables';
 
 export type Search = {
 	id: number;
@@ -10,4 +9,4 @@ export type Search = {
 
 class SearchRepo extends Repository<Search> {}
 
-export default new SearchRepo(TABLE);
+export default new SearchRepo(TableName.SEARCHES);

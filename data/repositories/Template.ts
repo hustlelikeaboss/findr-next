@@ -1,6 +1,5 @@
 import { Repository } from './Repository';
-
-const TABLE = 'templates';
+import { TableName } from '../tables';
 
 export type Template = {
 	id: number;
@@ -15,4 +14,4 @@ export type Template = {
 
 class TemplateRepo extends Repository<Template> {}
 
-export default new TemplateRepo(TABLE);
+export default new TemplateRepo(TableName.TEMPLATES);

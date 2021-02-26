@@ -14,7 +14,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			case 'GET':
 				res
 					.status(200)
-					.json(await TemplateFamilyRepo.findMany(reqQueryToInt(size), reqQueryToInt(page)));
+					.json(
+						await TemplateFamilyRepo.findMany({
+							size: reqQueryToInt(size),
+							page: reqQueryToInt(page),
+						})
+					);
 				break;
 			case 'POST':
 				res.status(200).json(await TemplateFamilyRepo.create(body));

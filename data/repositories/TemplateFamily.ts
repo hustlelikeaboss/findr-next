@@ -1,6 +1,5 @@
 import { Repository } from './Repository';
-
-const TABLE = 'template_families';
+import { TableName } from '../tables';
 
 export type TemplateFamily = {
 	id: number;
@@ -12,4 +11,4 @@ export type TemplateFamily = {
 
 class TemplateFamilyRepo extends Repository<TemplateFamily> {}
 
-export default new TemplateFamilyRepo(TABLE);
+export default new TemplateFamilyRepo(TableName.TEMPLATE_FAMILIES);
