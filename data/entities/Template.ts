@@ -49,7 +49,7 @@ export default {
 				imageUrl,
 			})
 			.where({ id })
-			.return('id');
+			.return('*');
 	},
 
 	async delete(id: number) {
