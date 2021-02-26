@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import TemplateRepo from '../../../data/repositories/Template';
+import TemplateFamilyRepo from '../../../data/repositories/TemplateFamily';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const { method, body } = req;
@@ -7,10 +7,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		switch (method) {
 			case 'GET':
-				res.status(200).json(await TemplateRepo.findAll());
+				res.status(200).json(await TemplateFamilyRepo.findAll());
 				break;
 			case 'POST':
-				res.status(200).json(await TemplateRepo.create(body));
+				res.status(200).json(await TemplateFamilyRepo.create(body));
 				break;
 			default:
 				res.setHeader('Allow', ['GET', 'POST']);
@@ -20,4 +20,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		console.error(err);
 		res.status(err?.status || 500).json(err?.message);
 	}
-};
+}

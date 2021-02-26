@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import TemplateRepo from '../../../data/repositories/Template';
+import SearchRepo from '../../../data/repositories/Search';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const { method, body } = req;
@@ -7,10 +7,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		switch (method) {
 			case 'GET':
-				res.status(200).json(await TemplateRepo.findAll());
+				res.status(200).json(await SearchRepo.findAll());
 				break;
 			case 'POST':
-				res.status(200).json(await TemplateRepo.create(body));
+				res.status(200).json(await SearchRepo.create(body));
 				break;
 			default:
 				res.setHeader('Allow', ['GET', 'POST']);
