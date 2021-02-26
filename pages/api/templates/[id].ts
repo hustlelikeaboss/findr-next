@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import TemplateRepo from '../../../data/repositories/Template';
+import { reqQueryToInt } from '../../../lib';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {
@@ -11,14 +12,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		switch (method) {
 			case 'GET':
-				const data = await TemplateRepo.findOne(id);
+				const data = await TemplateRepo.findOne(reqQueryToInt(id));
 				res.status(data ? 200 : 404).json(data);
 				break;
 			case 'PUT':
 				res.status(200).json(await TemplateRepo.update(body));
 				break;
 			case 'DELETE':
-				res.status(204).json(await TemplateRepo.delete(id));
+				res.status(204).json(await TemplateRepo.delete(reqQueryToInt(id)));
 				break;
 			default:
 				res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);

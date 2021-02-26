@@ -14,8 +14,12 @@ export class Repository<T extends Ider> {
 		return psql.from(this.table).where({ id: id }).one();
 	}
 
-	async findAll() {
-		return psql.from(this.table).all();
+	async findMany(size = 5, page = 1) {
+		return psql
+			.from(this.table)
+			.limit(size)
+			.offset((page - 1) * size)
+			.all();
 	}
 
 	async create(input: T) {

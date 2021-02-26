@@ -1,13 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import TemplateFamilyRepo from '../../../data/repositories/TemplateFamily';
+import { reqQueryToInt } from '../../../lib';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	const { method, body } = req;
+	const {
+		method,
+		body,
+		query: { size, page },
+	} = req;
 
 	try {
 		switch (method) {
 			case 'GET':
-				res.status(200).json(await TemplateFamilyRepo.findAll());
+				res
+					.status(200)
+					.json(await TemplateFamilyRepo.findMany(reqQueryToInt(size), reqQueryToInt(page)));
 				break;
 			case 'POST':
 				res.status(200).json(await TemplateFamilyRepo.create(body));
@@ -20,4 +27,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		console.error(err);
 		res.status(err?.status || 500).json(err?.message);
 	}
-}
+};
