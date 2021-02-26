@@ -1,4 +1,4 @@
-import TemplateRepo from '../../data/entities/Template';
+import TemplateRepo from '../../../data/entities/Template';
 
 export default async function handler(req, res) {
 	const { method, body } = req;
