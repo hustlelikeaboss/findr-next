@@ -1,5 +1,5 @@
 import { Template } from '../../data/repositories/Template';
-import Platform from './platform';
+import Platform from './Platform';
 
 const SQUARESPACE_THEME_REGEX = /("templateId":")(\w{11,})(")/gm;
 const WORDPRESS_THEME_REGEX = /(wp-content\/themes\/)(\w*)(\/)/gm;

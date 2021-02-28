@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Scraper from '../../../lib/theme-scraper';
-import Platform from '../../../lib/theme-scraper/platform';
+import Platform from '../../../lib/theme-scraper/Platform';
 import TemplateRepo, { Template } from '../../../data/repositories/Template';
 import TemplateFamilyRepo from '../../../data/repositories/TemplateFamily';
 import SearchRepo, { Search } from '../../../data/repositories/Search';
