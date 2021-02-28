@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import TemplateRepo from '../../../data/repositories/Template';
-import { reqQueryToInt } from '../../../lib';
+import { reqQueryToInt, toJsonErrors } from '../../../lib/utils';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {
@@ -27,6 +27,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 	} catch (err) {
 		console.error(err);
-		res.status(err?.status || 500).json(err?.message);
+		res.status(err?.status || 500).json(toJsonErrors(err));
 	}
 };

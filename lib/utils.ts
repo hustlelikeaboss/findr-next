@@ -10,9 +10,21 @@ export function reqQueryToInt(query: string | string[]): number | undefined {
 		return parsed;
 	}
 }
+
 export function reqQueryToStr(query: string | string[]): string {
 	if (Array.isArray(query)) {
 		return query?.[0];
 	}
 	return query;
+}
+
+export function toJsonErrors(error: any) {
+	return {
+		errors: [
+			{
+				status: error?.status || 500,
+				message: error?.message || error?.toString() || 'unexpected error',
+			},
+		],
+	};
 }

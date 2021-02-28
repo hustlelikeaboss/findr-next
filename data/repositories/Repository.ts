@@ -10,6 +10,7 @@ export class Repository<T extends Ider> {
 	constructor(table: string) {
 		this.table = table;
 	}
+
 	async findOne(id: number) {
 		return psql.from(this.table).where({ id: id }).one();
 	}
@@ -31,7 +32,7 @@ export class Repository<T extends Ider> {
 			.all();
 	}
 
-	async create(input: T) {
+	async create(input: Partial<T>) {
 		return psql.from(this.table).insert(input).return('id');
 	}
 
