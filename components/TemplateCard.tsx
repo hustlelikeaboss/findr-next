@@ -1,16 +1,15 @@
 import React from 'react';
 import { Template } from '../data/repositories/Template';
+import TemplateImageLink from './TemplateImageLink';
 
 export default function TemplateCard({ template }: { template: Template }) {
 	return (
 		<div className='card border rounded h-100'>
-			<a href={template.templateUrl} target='_blank' rel='noopener noreferrer'>
-				<img
-					className='card-img-top'
-					src={template.imageUrl}
-					alt={`screenshot for Squrespace template ${template.templateName}`}
-				/>
-			</a>
+			<TemplateImageLink
+				name={template.templateName}
+				url={template.templateUrl}
+				className='card-img-top'
+			/>
 
 			<div className='card-body pt-4'>
 				{/* categories */}

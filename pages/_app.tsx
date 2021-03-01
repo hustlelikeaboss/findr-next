@@ -78,6 +78,7 @@ export default function MyApp({ Component, pageProps }) {
 				<script src='/js/replacer.js'></script>
 				<script src='/js/bootstrap-form-validation.js'></script>
 				<script src='/js/google-analytics.js'></script>
+				<script src='/js/select2.js'></script>
 			</Head>
 
 			<Navbar />
