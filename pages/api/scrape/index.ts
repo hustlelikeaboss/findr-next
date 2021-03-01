@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import Scraper from '../../../lib/theme-scraper';
 import Platform from '../../../lib/theme-scraper/Platform';
 import TemplateRepo, { Template } from '../../../data/repositories/Template';
-import TemplateFamilyRepo from '../../../data/repositories/TemplateFamily';
+import TemplateFamilyRepo, { TemplateFamily } from '../../../data/repositories/TemplateFamily';
 import SearchRepo, { Search } from '../../../data/repositories/Search';
 import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '../../../lib/utils';
 
@@ -40,11 +40,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 				const { platform, themeId: templateFamilyId } = details;
 				if (platform === Platform.SQUARESPACE) {
-					const templateFamily = await TemplateFamilyRepo.findOneByFamilyId(templateFamilyId);
+					const templateFamily = (await TemplateFamilyRepo.findOneByFamilyId(
+						templateFamilyId
+					)) as TemplateFamily;
 					if (!templateFamily) {
 						details.isCustom = true;
 					}
 
+					details.searchTimes = templateFamily.searchTimes || 1;
+					details.themeName = templateFamily.templateFamilyName;
+					
 					const templates = (await TemplateRepo.findMany({
 						where: { templateFamilyId },
 						size: reqQueryToInt(size),

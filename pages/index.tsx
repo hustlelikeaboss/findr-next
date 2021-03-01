@@ -1,3 +1,5 @@
+import { useSearch } from '../hooks';
+
 export default function Home() {
 	return (
 		<main>
@@ -10,6 +12,8 @@ export default function Home() {
 }
 
 function Splash() {
+	const { inputRef, handleSubmit } = useSearch();
+
 	return (
 		<div id='hero-09' style={{ background: '#E3F4FC' }}>
 			<div className='container d-flex py-5' style={{ minHeight: '105vh' }}>
@@ -29,12 +33,13 @@ function Splash() {
 						</p>
 
 						{/*  embedded search form  */}
-						<form method='post' className='needs-validation' noValidate>
+						<form className='needs-validation' noValidate onSubmit={handleSubmit}>
 							<div className='form-row mb-4'>
 								<div className='col-lg-8 col-md-8 col-sm-12 pb-2 mx-auto mx-lg-o'>
 									<input
 										className='form-control form-control-lg border-0 rounded-0'
 										type='url'
+										ref={inputRef}
 										placeholder='Enter a URL'
 										aria-required='true'
 										required

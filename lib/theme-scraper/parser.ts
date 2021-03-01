@@ -1,12 +1,12 @@
 import { Template } from '../../data/repositories/Template';
 import Platform from './Platform';
 
-const SQUARESPACE_THEME_REGEX = /("templateId":")(\w{11,})(")/gm;
-const WORDPRESS_THEME_REGEX = /(wp-content\/themes\/)(\w*)(\/)/gm;
+const SQUARESPACE_THEME_REGEX = /("templateId":")(?<themeId>\w{11,})(")/gm;
+const WORDPRESS_THEME_REGEX = /(wp-content\/themes\/)(?<themeName>\w*)(\/)/gm;
 const SHOPIFY_THEME_REGEX = /(theme_store_id":\s*)(?<themeId>\d*)([\s\S]*BOOMR.themeName\s*=\s*")(?<themeName>\w+)/gm;
 const SHOWIT_REGEX = /\/\/lib.showit.co/gm;
 const WIX_REGEX = /\/\/static.wixstatic.com\//gm;
-const WEEBLY_REGEX = /_W\\.configDomain\\s=\\s\\"www\\.weebly\\.com\\"/gm;
+const WEEBLY_REGEX = /_W.configDomain\s+=\s+"www.weebly.com"/gm;
 
 export interface WebsiteDetails {
 	platform: Platform;
@@ -14,6 +14,7 @@ export interface WebsiteDetails {
 	themeName: string;
 	themeUrl: string;
 	isCustom: boolean;
+	searchTimes?: number;
 	templates?: Template[];
 }
 
