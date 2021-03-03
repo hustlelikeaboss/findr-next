@@ -46,7 +46,7 @@ async function scapeWebsite(url: string, page: number, size: number) {
 		return;
 	}
 
-	const res = await fetch('/api/scrape', {
+	const res = await fetch('/api/search', {
 		method: 'POST',
 		mode: 'same-origin',
 		cache: 'no-cache',

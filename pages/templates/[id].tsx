@@ -16,8 +16,6 @@ export default function TemplateDetails() {
 
 	return (
 		<main>
-			{/* <!--  TEMPLATE DETAILS --> */}
-
 			{/* <!-- basic info --> */}
 			<div className='pt-3'>
 				<div className='container d-flex flex-column pt-5'>
@@ -68,118 +66,20 @@ export default function TemplateDetails() {
 					</div>
 				</div>
 			</div>
-			{/* <!-- basic info --> */}
 
 			{/* <!--  screenshot  --> */}
 			<TemplateImageLink
 				name={template.templateName}
 				url={template.templateUrl}
+				src={template.imageUrl}
 				className='w-100 my-4 pb-3 border'
 			/>
 
-			{/* <!-- USER DEFINED DETAILS   --> */}
+			{/* <!--  user defined template details  --> */}
+			<UserTemplateDetails />
 
-			<div className='container d-flex flex-column py-5'>
-				{/* <!--   notes    --> */}
-				<div className='row my-auto my-5 pb-2'>
-					<div className='col-lg-8 col-md-10 col-sm-12 mx-auto'>
-						<h3 className='h4 mb-4'>
-							<i className='fas fa-palette text-muted pr-2'></i>Personal Notes
-						</h3>
-						<p className='mb-4 text-secondary mr-5'>
-							Notes are whatever you want to add the template for future reference.{' '}
-						</p>
-					</div>
-				</div>
-				{/* <!--   notes    --> */}
-
-				{/* <!--    categories    --> */}
-				<div className='row my-auto my-5 pb-2'>
-					<div className='col-lg-8 col-md-10 col-sm-12 mx-auto'>
-						<h3 className='h4 mb-3'>
-							<i className='fas fa-paint-brush text-muted pr-2'></i>Categories
-						</h3>
-						<p className='mb-4 text-secondary mr-5'>
-							<small>
-								<i>
-									Categories are broad terms to organize templates with. For example, you might have
-									a categorization system in terms of industry and think this template is an
-									excellent choice for "Fashion &amp; Beauty". Use categories sparingly and try to
-									limit to a max of 3.
-								</i>
-							</small>
-						</p>
-
-						<form className='text-secondary mb-4'>
-							<div className='form-check form-check-inline'>
-								<input
-									className='form-check-input'
-									type='checkbox'
-									id='inlineCheckbox1'
-									value='option1'
-								/>
-								<label className='form-check-label' htmlFor='inlineCheckbox1'>
-									Fashion &amp; Beauty
-								</label>
-							</div>
-							<div className='form-check form-check-inline'>
-								<input
-									className='form-check-input'
-									type='checkbox'
-									id='inlineCheckbox2'
-									value='option2'
-									checked
-								/>
-								<label className='form-check-label' htmlFor='inlineCheckbox2'>
-									Creative Services
-								</label>
-							</div>
-							<div className='form-check form-check-inline'>
-								<input
-									className='form-check-input'
-									type='checkbox'
-									id='inlineCheckbox3'
-									value='option3'
-								/>
-								<label className='form-check-label' htmlFor='inlineCheckbox3'>
-									Food &amp; Drink
-								</label>
-							</div>
-						</form>
-					</div>
-				</div>
-				{/* <!--    categories    --> */}
-
-				{/* <!--    tags    --> */}
-				<div className='row my-auto my-5 pb-2'>
-					<div className='col-lg-8 col-md-10 col-sm-12 mx-auto'>
-						<h3 className='h4 mb-3'>
-							<i className='fas fa-tags text-muted pr-2'></i>Tags
-						</h3>
-						<p className='mb-4 text-secondary mr-5'>
-							<small>
-								<i>
-									Tags are more fine-grained ways of sorting your templates. For example, if you
-									want to be able to search for all the templates that have a certain feature or
-									style, you could add tags like "stacked index page" or "minimalist". Be creative
-									and use as many tags as you like!
-								</i>
-							</small>
-						</p>
-
-						<div className='form-group text-muted mr-5'>
-							<select className='form-control user-tags' multiple>
-								<option selected>parallax scrolling</option>
-								<option selected>edgy</option>
-								<option>stacked index page</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				{/* <!--    tags    --> */}
-
-				<Recommendations />
-			</div>
+			{/* recommended similar templates or websites build using template in family */}
+			<Recommendations />
 		</main>
 	);
 }
@@ -193,9 +93,110 @@ async function fetchTemplateById(id: number): Promise<Template> {
 	return res.json();
 }
 
+function UserTemplateDetails() {
+	return (
+		<div className='container d-flex flex-column py-5'>
+			{/* <!--   notes    --> */}
+			<div className='row my-auto my-5 pb-2'>
+				<div className='col-lg-8 col-md-10 col-sm-12 mx-auto'>
+					<h3 className='h4 mb-4'>
+						<i className='fas fa-palette text-muted pr-2'></i>Personal Notes
+					</h3>
+					<p className='mb-4 text-secondary mr-5'>
+						Notes are whatever you want to add the template for future reference.{' '}
+					</p>
+				</div>
+			</div>
+
+			{/* <!--    categories    --> */}
+			<div className='row my-auto my-5 pb-2'>
+				<div className='col-lg-8 col-md-10 col-sm-12 mx-auto'>
+					<h3 className='h4 mb-3'>
+						<i className='fas fa-paint-brush text-muted pr-2'></i>Categories
+					</h3>
+					<p className='mb-4 text-secondary mr-5'>
+						<small>
+							<i>
+								Categories are broad terms to organize templates with. For example, you might have a
+								categorization system in terms of industry and think this template is an excellent
+								choice for "Fashion &amp; Beauty". Use categories sparingly and try to limit to a
+								max of 3.
+							</i>
+						</small>
+					</p>
+
+					<form className='text-secondary mb-4'>
+						<div className='form-check form-check-inline'>
+							<input
+								className='form-check-input'
+								type='checkbox'
+								id='inlineCheckbox1'
+								value='option1'
+							/>
+							<label className='form-check-label' htmlFor='inlineCheckbox1'>
+								Fashion &amp; Beauty
+							</label>
+						</div>
+						<div className='form-check form-check-inline'>
+							<input
+								className='form-check-input'
+								type='checkbox'
+								id='inlineCheckbox2'
+								value='option2'
+								checked
+							/>
+							<label className='form-check-label' htmlFor='inlineCheckbox2'>
+								Creative Services
+							</label>
+						</div>
+						<div className='form-check form-check-inline'>
+							<input
+								className='form-check-input'
+								type='checkbox'
+								id='inlineCheckbox3'
+								value='option3'
+							/>
+							<label className='form-check-label' htmlFor='inlineCheckbox3'>
+								Food &amp; Drink
+							</label>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			{/* <!--    tags    --> */}
+			<div className='row my-auto my-5 pb-2'>
+				<div className='col-lg-8 col-md-10 col-sm-12 mx-auto'>
+					<h3 className='h4 mb-3'>
+						<i className='fas fa-tags text-muted pr-2'></i>Tags
+					</h3>
+					<p className='mb-4 text-secondary mr-5'>
+						<small>
+							<i>
+								Tags are more fine-grained ways of sorting your templates. For example, if you want
+								to be able to search for all the templates that have a certain feature or style, you
+								could add tags like "stacked index page" or "minimalist". Be creative and use as
+								many tags as you like!
+							</i>
+						</small>
+					</p>
+
+					<div className='form-group text-muted mr-5'>
+						<select className='form-control user-tags' multiple>
+							<option selected>parallax scrolling</option>
+							<option selected>edgy</option>
+							<option>stacked index page</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
 function Recommendations() {
 	return (
-		<div className='container'>
+		<div className='container d-flex flex-column py-5'>
 			<div className='row'>
 				<div className='col'>
 					<hr className='mt-5' />

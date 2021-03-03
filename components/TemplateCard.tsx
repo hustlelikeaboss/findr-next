@@ -8,6 +8,7 @@ export default function TemplateCard({ template }: { template: Template }) {
 			<TemplateImageLink
 				name={template.templateName}
 				url={template.templateUrl}
+				src={template.imageUrl}
 				className='card-img-top'
 			/>
 
