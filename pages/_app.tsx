@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { Provider } from 'next-auth/client'
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -9,7 +10,7 @@ import '../styles/custom.css';
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
 	return (
-		<>
+		<Provider session={pageProps.session}>
 			<Head>
 				<title>Findr: the simplest way to identify any Squarespace template</title>
 
@@ -86,6 +87,6 @@ export default function MyApp({ Component, pageProps }) {
 			<Component {...pageProps} />
 
 			<Footer />
-		</>
+		</Provider>
 	);
 }
