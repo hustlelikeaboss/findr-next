@@ -107,8 +107,8 @@ function TemplateFamilyStats({ details }: { details: WebsiteDetails }) {
 				<div className='mt-5'>
 					{details.platform === Platform.WORDPRESS && (
 						<p>
-							This website is built on <b>WordPress</b>
-							and it's using the <b>{details.themeName}</b> theme.
+							This website is built on <b>WordPress</b> and it's using the{' '}
+							<b>{details.themeName}</b> theme.
 						</p>
 					)}
 

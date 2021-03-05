@@ -72,7 +72,7 @@ export default class DefaultParser implements ThemeParser {
 		if (!this.platform) {
 			const [themeName] = this.parseHtmlByRegex(this.rawHtml, WORDPRESS_THEME_REGEX, 2); // only interested in group 2
 			if (themeName) {
-				this.platform = Platform.SQUARESPACE;
+				this.platform = Platform.WORDPRESS;
 				this.themeName = themeName;
 			}
 		}
