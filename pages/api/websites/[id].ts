@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import SearchRepo from '../../../data/repositories/Search';
+import WebsiteRepo from '../../../data/repositories/Website';
 import { reqQueryToInt, toJsonErrors } from '../../../lib/utils';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -12,14 +12,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		switch (method) {
 			case 'GET':
-				const data = await SearchRepo.findOne(reqQueryToInt(id));
+				const data = await WebsiteRepo.findOne(reqQueryToInt(id));
 				res.status(data ? 200 : 404).json(data);
 				break;
 			case 'PUT':
-				res.status(200).json(await SearchRepo.update(body));
+				res.status(200).json(await WebsiteRepo.update(body));
 				break;
 			case 'DELETE':
-				res.status(204).json(await SearchRepo.delete(reqQueryToInt(id)));
+				res.status(204).json(await WebsiteRepo.delete(reqQueryToInt(id)));
 				break;
 			default:
 				res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
