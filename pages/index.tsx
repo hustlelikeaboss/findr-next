@@ -37,7 +37,7 @@ function Splash() {
 							<div className='form-row mb-4'>
 								<div className='col-lg-8 col-md-8 col-sm-12 pb-2 mx-auto mx-lg-o'>
 									<input
-										className='form-control form-control-lg border-0 rounded-0'
+										className='form-control form-control-lg border-0'
 										type='url'
 										ref={inputRef}
 										placeholder='Enter a URL'
@@ -48,7 +48,7 @@ function Splash() {
 									<div className='invalid-feedback'>Please provide a valid URL.</div>
 								</div>
 								<div className='col-lg-4 col-md-8 col-sm-12 pb-2 mx-auto mx-lg-0'>
-									<button className='btn btn-warning w-100 btn-lg border-0 rounded-0' type='submit'>
+									<button className='btn btn-warning w-100 btn-lg border-0' type='submit'>
 										SEARCH
 										<i className='fa fa-angle-right ml-2'></i>
 									</button>
