@@ -1,6 +1,15 @@
 {
 	"name": "findr-next",
 	"version": "1.0.0",
+	"author": {
+		"name": "David Q. Jin",
+		"email": "david@quanj.in",
+		"url": "https://david.quanj.in"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:hustlelikeaboss/findr-next.git"
+	},
 	"scripts": {
 		"dev": "next",
 		"test": "jest",
