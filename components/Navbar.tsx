@@ -40,7 +40,7 @@ export default function Navbar() {
 						</li>
 					</ul>
 				) : (
-					<ul className='navbar-nav ml-auto'>
+					<ul className='navbar-nav ml-auto pt-3'>
 						<li className='nav-item mx-1'>
 							<form
 								className='needs-validation d-none d-md-block'
@@ -50,7 +50,8 @@ export default function Navbar() {
 								<div className='form-row mb-4'>
 									<div className='col-lg-12 col-md-8 col-sm-12 pr-2'>
 										<input
-											className='form-control pl-3 py-2'
+											className='form-control pl-3'
+											style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem' }}
 											type='url'
 											id='search-box'
 											ref={inputRef}
