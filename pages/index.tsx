@@ -1,4 +1,5 @@
 import { useSearch } from '../hooks';
+import { SignInCard } from './auth/login';
 
 export default function Home() {
 	return (
@@ -152,64 +153,7 @@ function Login() {
 			<div className='container d-flex flex-column py-5' style={{ minHeight: '105vh' }}>
 				<div className='row my-auto'>
 					<div className='col-lg-5 col-md-12 col-sm-12 my-auto'>
-						<div className='card border-0'>
-							<div className='card-header bg-transparent px-5'>
-								<h2 className='h4 pt-3 pb-2'>Login</h2>
-							</div>
-							<div className='card-block pt-4 px-5 pb-1'>
-								{/*   embedded form   */}
-
-								<form method='POST' className='pt-3 needs-validation' noValidate>
-									<div className='form-group'>
-										<input
-											className='form-control form-control-lg rounded-0'
-											type='email'
-											id='email'
-											name='email'
-											placeholder='Email'
-											aria-required='true'
-											required
-										/>
-										<div className='invalid-feedback'>Please provide a valid email address.</div>
-									</div>
-									<div className='form-group mb-3'>
-										<input
-											className='form-control form-control-lg rounded-0'
-											type='password'
-											id='password'
-											name='password'
-											placeholder='Password'
-											aria-required='true'
-											required
-										/>
-										<div className='invalid-feedback'>Password is required.</div>
-									</div>
-									<div className='form-check mb-4'>
-										<label className='form-check-label text-secondary' htmlFor='rememberMeCheck'>
-											<input
-												className='form-check-input mr-2'
-												type='checkbox'
-												value='1'
-												id='rememberMeCheck'
-												name='rememberMeCheck'
-											/>
-											Remember me
-										</label>
-									</div>
-									<button className='btn btn-lg btn-warning mb-4 w-100 rounded-0' type='submit'>
-										Sign In
-									</button>
-									<hr />
-									<p className='text-center mb-5'>
-										<small>
-											<a className='text-secondary' href='@{/forgot-password}'>
-												<u>I forgot my password</u>
-											</a>
-										</small>
-									</p>
-								</form>
-							</div>
-						</div>
+						<SignInCard />
 					</div>
 					<div className='col-lg-5 col-md-10 col-sm-12 m-auto py-5 my-auto'>
 						<h2 className='display-4 mb-3 text-white'>Be a design ninja</h2>
@@ -217,8 +161,8 @@ function Login() {
 							Supercharge your Squarespace design workflow with Findr's cool features.
 						</p>
 						<hr className='my-4 border-light' style={{ opacity: '.2' }} />
-						<a className='btn my-2 p-0 text-white' href='@{/register}'>
-							Create account
+						<a className='btn my-2 p-0 text-white' href='/login'>
+							Get Started
 							<i className='fa fa-angle-right ml-2' />
 						</a>
 					</div>
