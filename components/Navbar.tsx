@@ -77,15 +77,15 @@ export default function Navbar() {
 								aria-expanded='false'
 							>
 								<img
-									alt='user profile image'
+									alt={'user profile image'}
 									className='rounded-circle my-auto mr-3'
-									src={session.user.image}
+									src={session?.user?.image || '/images/avatar.png'}
 									height='32'
 								/>
-								{session.user.name}
+								{session?.user?.name || session?.user?.email}
 							</a>
 							<div className='dropdown-menu' aria-labelledby='account-dropdown'>
-								<a className='dropdown-item' href='#'>
+								<a className='dropdown-item' href='/profile'>
 									<i className='far fa-user pr-2'></i>Profile
 								</a>
 								<a className='dropdown-item' href='#'>

@@ -110,3 +110,7 @@ nav ul li {
 	background-color: #f8f9fa;
 	border-color: #f8f9fa;
 }
+
+.social-login:hover {
+	cursor: pointer;
+}
