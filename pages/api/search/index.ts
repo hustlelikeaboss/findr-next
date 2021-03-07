@@ -2,8 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import Scraper from '../../../lib/theme-scraper';
 import Platform from '../../../lib/theme-scraper/Platform';
 import TemplateRepo, { Template } from '../../../data/repositories/Template';
-import TemplateFamilyRepo from '../../../data/repositories/TemplateFamily';
-import SearchRepo, { Search } from '../../../data/repositories/Search';
+import TemplateFamilyRepo, { TemplateFamily } from '../../../data/repositories/TemplateFamily';
+import SearchRepo, { Website } from '../../../data/repositories/Website';
 import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '../../../lib/utils';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -19,7 +19,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let url = reqQueryToStr(urlInput);
 	try {
 		if (!/^https?:\/\//.test(url)) {
-			url = 'https://' + url;
+			url = 'http://' + url;
 		}
 		url = new URL(url).origin;
 	} catch (err) {
@@ -27,7 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 
 	try {
-		const search = (await SearchRepo.findOneByUrl(url)) as Search;
+		const search = (await SearchRepo.findOneByUrl(url)) as Website;
 		if (!search) {
 			SearchRepo.create({ url, searchTimes: 1 });
 		} else {
@@ -40,10 +40,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 				const { platform, themeId: templateFamilyId } = details;
 				if (platform === Platform.SQUARESPACE) {
-					const templateFamily = await TemplateFamilyRepo.findOneByFamilyId(templateFamilyId);
+					const templateFamily = (await TemplateFamilyRepo.findOneByFamilyId(
+						templateFamilyId
+					)) as TemplateFamily;
 					if (!templateFamily) {
 						details.isCustom = true;
 					}
+
+					details.searchTimes = templateFamily.searchTimes || 1;
+					details.themeName = templateFamily.templateFamilyName;
 
 					const templates = (await TemplateRepo.findMany({
 						where: { templateFamilyId },

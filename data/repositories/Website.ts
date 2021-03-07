@@ -3,13 +3,13 @@ import psql from '../client';
 import { Repository } from './Repository';
 import { TableName } from '../tables';
 
-export type Search = {
+export type Website = {
 	id: number;
 	url: string;
 	searchTimes: number;
 };
 
-class SearchRepo extends Repository<Search> {
+class WebsiteRepo extends Repository<Website> {
 	async findOneByUrl(url: string) {
 		return psql
 			.from(this.table)
@@ -18,4 +18,4 @@ class SearchRepo extends Repository<Search> {
 	}
 }
 
-export default new SearchRepo(TableName.SEARCHES);
+export default new WebsiteRepo(TableName.WEBSITES);

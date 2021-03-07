@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import TemplateFamilyRepo from '../../../../data/repositories/TemplateFamily';
-import { reqQueryToInt, toJsonErrors } from '../../../../lib/utils';
+import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '../../../../lib/utils';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {
@@ -12,7 +12,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		switch (method) {
 			case 'GET':
-				const data = await TemplateFamilyRepo.findOne(reqQueryToInt(id));
+				let familyId = reqQueryToInt(id);
+				let data: any;
+				if (familyId) {
+					data = await TemplateFamilyRepo.findOne(familyId);
+				} else {
+					data = await TemplateFamilyRepo.findOneByFamilyId(reqQueryToStr(id));
+				}
 				res.status(data ? 200 : 404).json(data);
 				break;
 			case 'PUT':

@@ -1,0 +1,112 @@
+/* Typography
+-------------------------------------------------- */
+html,
+body,
+card {
+	font-family: 'Montserrat', 'Open Sans Pro', 'Arial', sans-serif;
+	font-weight: 300;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+/* applied to body */
+.with-sticky-footer {
+	margin-bottom: 150px; /* Margin bottom by footer height */
+}
+
+.sticky-footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 150px; /* Set the fixed height of the footer here */
+	line-height: 60px; /* Vertically center the text there */
+}
+
+/* Navbar
+-------------------------------------------------- */
+nav ul li {
+	font-weight: 500 !important;
+}
+
+.navbar-brand span {
+	margin-left: 1.25em;
+	min-height: 3.5rem;
+}
+
+.navbar-light .navbar-brand span {
+	background-image: url('../public/images/logo-black.png');
+}
+
+.navbar-dark .navbar-brand span {
+	background-image: url('../public/images/logo-white.png');
+}
+
+@media only screen and (max-width: 600px) {
+	.navbar-brand span {
+		margin-left: 0;
+		min-height: 2.5rem;
+	}
+	.left-half {
+		padding-top: 6em;
+		padding-bottom: 2em;
+	}
+	.right-half {
+		padding-top: 3em;
+	}
+}
+
+/* Buttons
+-------------------------------------------------- */
+
+.btn-outline-dark {
+	border-color: #bfc8d1;
+}
+
+.jumbotron {
+	background-color: rgb(0, 0, 0, 0);
+}
+
+/* Custom Tooltips
+-------------------------------------------------- */
+.tooltip-inner {
+	background-color: #343a40;
+	color: #ffffff;
+	min-width: 400px;
+	text-align: left;
+	padding: 1em;
+}
+
+@media only screen and (max-width: 374px) {
+	.tooltip-inner {
+		margin-right: -60px;
+	}
+}
+
+.tooltip.top .tooltip-arrow {
+	border-top-color: #343a40;
+}
+
+.tooltip.right .tooltip-arrow {
+	border-right-color: #343a40;
+}
+
+.tooltip.bottom .tooltip-arrow {
+	border-bottom-color: #343a40;
+}
+
+.tooltip.left .tooltip-arrow {
+	border-left-color: #343a40;
+}
+
+/* MISC
+-------------------------------------------------- */
+#search-box {
+	color: #212529;
+	background-color: #f8f9fa;
+	border-color: #f8f9fa;
+}

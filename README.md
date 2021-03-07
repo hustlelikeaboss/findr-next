@@ -16,9 +16,6 @@ Deploy using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm
 # Init local database
 docker-compose up -d
 
-# Run migrations
-PGPASSWORD=findr psql -h localhost -p 5436 -d findr -U findr < ./.migrations/001-init.psql
-
 # Remove local database
 docker-compose down
 ```
