@@ -7,8 +7,7 @@ import Platform from '../../lib/theme-scraper/Platform';
 
 export default function Results() {
 	const router = useRouter();
-	const { url, page = 1, size = 6 } = router.query;
-
+	const { url, page = 1, size = 60 } = router.query;
 	const { data: details, error } = useSwr<WebsiteDetails>([url, page, size], scapeWebsite);
 
 	return (
