@@ -47,20 +47,7 @@ export default NextAuth({
 	// Notes:
 	// * You must to install an appropriate node_module for your database
 	// * The Email provider requires a database (OAuth providers do not)
-	database: {
-		type: 'postgres',
-		host: process.env.AUTH_DATABASE_HOST,
-		port: process.env.AUTH_DATABASE_PORT || 5432,
-		username: process.env.AUTH_DATABASE_USERNAME,
-		password: process.env.AUTH_DATABASE_PASSWORD,
-		database: process.env.AUTH_DATABASE_NAME,
-		ssl: true,
-		extra: {
-			ssl: {
-				rejectUnauthorized: false,
-			},
-		},
-	},
+	database: process.env.AUTH_DATABASE_URL,
 
 	// The secret should be set to a reasonably long random string.
 	// It is used to sign cookies and to sign and encrypt JSON Web Tokens, unless
