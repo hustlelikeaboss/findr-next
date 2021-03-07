@@ -46,7 +46,7 @@ export default function SignIn({ providers }: { providers: { [id: string]: Sessi
 											id='email'
 											name='email'
 											ref={inputRef}
-											defaultValue={null}
+											defaultValue={''}
 											placeholder='My email address'
 											required
 										/>
