@@ -1,8 +1,7 @@
 import Head from 'next/head';
-import { Provider } from 'next-auth/client'
+import { Provider } from 'next-auth/client';
 
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Layout from '../components/Layout';
 
 import '../styles/replacer.css';
 import '../styles/custom.css';
@@ -82,11 +81,9 @@ export default function MyApp({ Component, pageProps }) {
 				<script src='/js/select2.js'></script>
 			</Head>
 
-			<Navbar />
-
-			<Component {...pageProps} />
-
-			<Footer />
+			<Layout>
+				<Component {...pageProps} />
+			</Layout>
 		</Provider>
 	);
 }
