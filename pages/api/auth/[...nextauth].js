@@ -110,5 +110,5 @@ export default NextAuth({
 	events: {},
 
 	// Enable debug messages in the console if you are having problems
-	debug: false,
+	debug: process.env.DEBUG === 1,
 });
