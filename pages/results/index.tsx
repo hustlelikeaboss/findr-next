@@ -47,6 +47,14 @@ async function scapeWebsite(url: string, page: number, size: number) {
 
 	const res = await fetch('/api/search', {
 		method: 'POST',
+		mode: 'same-origin',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		redirect: 'follow',
+		referrerPolicy: 'no-referrer',
 		body: JSON.stringify({
 			url,
 			page,
