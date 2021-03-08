@@ -5033,8 +5033,3 @@ VALUES (
   )
 RETURNING *;
 -- Dump completed on 2021-03-01 18:42:02
--- 
--- Users and privileges
--- 
--- CREATE USER findr WITH PASSWORD 'my_password';
-GRANT ALL PRIVILEGES ON DATABASE findr TO findr;
