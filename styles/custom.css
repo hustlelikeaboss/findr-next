@@ -114,3 +114,13 @@ nav ul li {
 .social-login:hover {
 	cursor: pointer;
 }
+
+.invalid-feedback {
+	display: block;
+    visibility: hidden;
+}
+
+.was-validated .form-control:invalid~.invalid-feedback {
+	display: block;
+    visibility: visible;
+}
