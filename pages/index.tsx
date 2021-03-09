@@ -1,4 +1,5 @@
 import { useSearch } from '../hooks';
+import { getRandomAdj } from '../lib/utils';
 import { SignInCard } from './auth/login';
 
 export default function Home() {
@@ -28,9 +29,9 @@ function Splash() {
 							Findr
 						</h2>
 						<p className='lead pb-4 text-secondary'>
-							The <b>FASTEST</b> way on the planet to find out which template any Squarespace
-							website is using. Simple as the click of a button! Not sure if it's a Squarespace
-							website? You'll find that out too.
+							The <span className='text-bold text-uppercase text-dark'>{getRandomAdj()}</span> way
+							on the planet to find out which template any Squarespace website is using. Just copy,
+							paste, and click! Not sure if it's on Squarespace? You'll find that out too.
 						</p>
 
 						{/*  embedded search form  */}
@@ -41,7 +42,7 @@ function Splash() {
 										className='form-control form-control-lg border-0'
 										type='url'
 										ref={inputRef}
-										placeholder='Enter a URL'
+										placeholder='Paste the URL here'
 										aria-required='true'
 										required
 										autoFocus
@@ -80,24 +81,25 @@ type Feature = {
 function Features() {
 	const features: Feature[] = [
 		{
-			title: 'Simple',
-			description: `It's literally as easy as the click of a button. No more fumbling around!`,
+			title: 'Effortless',
+			description: `Copy, paste, and click: simple as that! No more fumbling around!`,
 			icon: 'interface-53',
 		},
 		{
 			title: 'Powerful',
-			description: 'With over 100 templates and insights about non-Squarespace websites',
+			description:
+				'Supports over 100 Squarespace templates and websites built on other popular platforms',
 			icon: 'interface-54',
 		},
 		{
 			title: 'Delightful',
-			description: 'Adopting the same clean, modern design language that Squarespace is known for',
+			description:
+				'Clean, modern, uncluttered design, making it a joy to use and easy addition to your workflow',
 			icon: 'interface-65',
 		},
 		{
 			title: 'Extensible',
-			description: `Build your own personal library by saving favorites, categorizing them, and adding
-			tags/notes`,
+			description: `Build your own personal library using favorites, categories, tags, and notes`,
 			icon: 'interface-62',
 		},
 	];
@@ -191,7 +193,7 @@ function Plans() {
 			level: 2,
 			name: 'Chuunin',
 			features: ['Unlimited searches'],
-			cost: 2,
+			cost: 2.99,
 			highlighted: true,
 		},
 		{
@@ -199,10 +201,10 @@ function Plans() {
 			name: 'Jounin',
 			features: [
 				'Unlimited searches',
-				'Save all your favorites in one place',
-				'Organize them using categories, tags, and personal notes',
+				'Template identification based on computer vision',
+				'Personal library with favorites, categories, tags, and notes',
 			],
-			cost: 5,
+			cost: 4.99,
 		},
 	];
 	return (
@@ -248,6 +250,7 @@ function PlanCard({ p }: { p: Plan }) {
 				</h5>
 				{p.features.map((f, i) => (
 					<p className='lead mb-3 text-secondary mx-4' key={i}>
+						<i className='fas fa-check fa-xs text-success mr-2' />
 						{f}
 					</p>
 				))}
