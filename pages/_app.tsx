@@ -32,7 +32,7 @@ export default function MyApp({ Component, pageProps }) {
 					property='og:description'
 					content="Find out what template your favorite Squarespace website is using with a simple click! Copy and paste the URL and you're done. No more fumbling around!"
 				/>
-				<meta property='og:image' content='https://preview.ibb.co/m9otLF/Findr_screenshot.png' />
+				<meta property='og:image' content='https://cdn.jsdelivr.net/gh/hustlelikeaboss/assets/img/findr-screenshot.png' />
 
 				{/* stylesheets */}
 				<link
