@@ -7,8 +7,7 @@ import Platform from '../../lib/theme-scraper/Platform';
 
 export default function Results() {
 	const router = useRouter();
-	const { url, page = 1, size = 6 } = router.query;
-
+	const { url, page = 1, size = 60 } = router.query;
 	const { data: details, error } = useSwr<WebsiteDetails>([url, page, size], scapeWebsite);
 
 	return (
@@ -25,7 +24,7 @@ export default function Results() {
 								</a>
 							</p>
 							{error ? (
-								<div className='mt-5'>Failed to load website details</div>
+								<div className='mt-5'>Failed to load website details: {error?.toString()}</div>
 							) : !details ? (
 								<div className='mt-5'>Loading...</div>
 							) : (
@@ -84,22 +83,10 @@ function TemplateFamilyStats({ details }: { details: WebsiteDetails }) {
 								</a>{' '}
 								family.
 							</p>
-							<div className='col-lg-6 col-md-8 col-sm-12 mx-auto text-center pt-2 pb-3'>
-								<ul className='list-unstyled text-secondary text-lg-left'>
-									<li className='pb-1'>
-										<i className='fas fa-user-friends mr-2'></i>This family contains{' '}
-										<b>{details.templates?.length}</b> templates;
-									</li>
-									<li className='pb-1'>
-										<i className='fas fa-search mr-3'></i>It has been searched{' '}
-										<b>{details.searchTimes}</b> times;
-									</li>
-									<li className='pb-1'>
-										<i className='fab fa-hotjar mr-3'></i>It's popularity index is <b>9</b> (out of
-										10).
-									</li>
-								</ul>
-							</div>
+							<SquarespaceTemplateFamilyStats
+								numOfTemplates={details?.templates?.length}
+								searchTimes={details.searchTimes}
+							/>
 						</>
 					)}
 				</div>
@@ -108,7 +95,7 @@ function TemplateFamilyStats({ details }: { details: WebsiteDetails }) {
 					{details.platform === Platform.WORDPRESS && (
 						<p>
 							This website is built on <b>WordPress</b> and it's using the{' '}
-							<b>{details.themeName}</b> theme.
+							<i><b>{details.themeName}</b></i> theme.
 						</p>
 					)}
 
@@ -161,5 +148,33 @@ function TemplateFamilyStats({ details }: { details: WebsiteDetails }) {
 				</div>
 			)}
 		</>
+	);
+}
+
+export function SquarespaceTemplateFamilyStats({
+	numOfTemplates,
+	searchTimes,
+	popularity,
+}: {
+	numOfTemplates: number;
+	searchTimes: number;
+	popularity?: number;
+}) {
+	return (
+		<div className='col-lg-6 col-md-8 col-sm-12 mx-auto text-center pt-2 pb-3'>
+			<ul className='list-unstyled text-secondary text-lg-left'>
+				<li className='pb-1'>
+					<i className='fas fa-user-friends mr-2'></i>This family contains <b>{numOfTemplates}</b>{' '}
+					templates;
+				</li>
+				<li className='pb-1'>
+					<i className='fas fa-search mr-3'></i>It has been searched <b>{searchTimes}</b> times;
+				</li>
+				<li className='pb-1'>
+					<i className='fab fa-hotjar mr-3'></i>It's popularity index is <b>{popularity}</b> (out of
+					10).
+				</li>
+			</ul>
+		</div>
 	);
 }

@@ -1,18 +1,9 @@
 import { signIn, signOut, useSession } from 'next-auth/client';
-import { useEffect } from 'react';
 import { useSearch } from '../hooks';
 
-const PUBLIC_ROUTES = ['/', '/faq', '/auth/login', '/auth/logout', '/auth/verify-request'];
-
 export default function Navbar() {
-	const [session, loading] = useSession();
+	const [session] = useSession();
 	const { inputRef, handleSubmit } = useSearch();
-
-	useEffect(() => {
-		if (!PUBLIC_ROUTES.includes(window?.location?.pathname) && !loading && !session) {
-			signIn();
-		}
-	}, [loading, session]);
 
 	return (
 		<nav className='navbar navbar-expand-lg fixed-top navbar-light'>

@@ -16,7 +16,7 @@ export default function TemplateDetails() {
 
 	return (
 		<main>
-			{/* <!-- basic info --> */}
+			{/* basic info  */}
 			<div className='pt-3'>
 				<div className='container d-flex flex-column pt-5'>
 					<div className='row my-auto my-5 pt-5 pb-4'>
@@ -67,7 +67,7 @@ export default function TemplateDetails() {
 				</div>
 			</div>
 
-			{/* <!--  screenshot  --> */}
+			{/*  screenshot   */}
 			<TemplateImageLink
 				name={template.templateName}
 				url={template.templateUrl}
@@ -75,11 +75,11 @@ export default function TemplateDetails() {
 				className='w-100 my-4 pb-3 border'
 			/>
 
-			{/* <!--  user defined template details  --> */}
-			<UserTemplateDetails />
+			{/*  user defined template details   */}
+			{/* <UserTemplateDetails /> */}
 
 			{/* recommended similar templates or websites build using template in family */}
-			<Recommendations />
+			{/* <Recommendations /> */}
 		</main>
 	);
 }
@@ -96,7 +96,7 @@ async function fetchTemplateById(id: number): Promise<Template> {
 function UserTemplateDetails() {
 	return (
 		<div className='container d-flex flex-column py-5'>
-			{/* <!--   notes    --> */}
+			{/*   notes     */}
 			<div className='row my-auto my-5 pb-2'>
 				<div className='col-lg-8 col-md-10 col-sm-12 mx-auto'>
 					<h3 className='h4 mb-4'>
@@ -108,7 +108,7 @@ function UserTemplateDetails() {
 				</div>
 			</div>
 
-			{/* <!--    categories    --> */}
+			{/*    categories     */}
 			<div className='row my-auto my-5 pb-2'>
 				<div className='col-lg-8 col-md-10 col-sm-12 mx-auto'>
 					<h3 className='h4 mb-3'>
@@ -164,7 +164,7 @@ function UserTemplateDetails() {
 				</div>
 			</div>
 
-			{/* <!--    tags    --> */}
+			{/*    tags     */}
 			<div className='row my-auto my-5 pb-2'>
 				<div className='col-lg-8 col-md-10 col-sm-12 mx-auto'>
 					<h3 className='h4 mb-3'>
@@ -210,7 +210,7 @@ function Recommendations() {
 			<div className='row mb-5 py-5'>
 				<div className='col-lg-12 m-auto'>
 					<div className='card-group'>
-						{/* <!-- card --> */}
+						{/* card  */}
 						<div className='card border rounded'>
 							<a href='#'>
 								<img className='card-img-top' src='/images/photo-40.jpg' alt='Card image cap' />
@@ -231,7 +231,7 @@ function Recommendations() {
 							</div>
 						</div>
 
-						{/* <!-- card --> */}
+						{/* card  */}
 						<div className='card middle border rounded'>
 							<a href='#'>
 								<img className='card-img-top' src='/images/photo-47.jpg' alt='Card image cap' />
@@ -252,7 +252,7 @@ function Recommendations() {
 							</div>
 						</div>
 
-						{/* <!-- card --> */}
+						{/* card  */}
 						<div className='card border rounded'>
 							<a href='#'>
 								<img className='card-img-top' src='/images/photo-42.jpg' alt='Card image cap' />

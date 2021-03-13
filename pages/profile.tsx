@@ -23,8 +23,16 @@ export default function SignIn({}) {
 					</h2>
 
 					<form className='needs-validation px-3' noValidate>
-						<div className='form-row'>
+						<div className='form-row d-flex align-items-end'>
 							<div className='col-md-4 mb-3'>
+								<img
+									alt={'user profile image'}
+									className='rounded-circle my-auto mr-3'
+									src={session?.user?.image || '/images/avatar.png'}
+									height='100'
+								/>
+							</div>
+							<div className='col-md-6 mb-3'>
 								<label className='text-secondary' htmlFor='name'>
 									<small>Name</small>
 								</label>
@@ -43,7 +51,10 @@ export default function SignIn({}) {
 									/>
 								</div>
 							</div>
-							<div className='col-md-8 mb-3'>
+						</div>
+
+						<div className='form-row'>
+							<div className='col-md-9 mb-3'>
 								<label className='text-secondary' htmlFor='email'>
 									<small>Email</small>
 								</label>
@@ -125,8 +136,8 @@ export default function SignIn({}) {
 							</div>
 						</div>
 
-						<div className='text-right'>
-							<button className='btn btn-warning' type='submit'>
+						<div className='text-right py-5'>
+							<button className='btn btn-warning' type='submit' disabled>
 								Update
 							</button>
 						</div>

@@ -37,3 +37,9 @@ export function splitArrByLength<T>(arr: T[], size: number): T[][] {
 		return arr.slice(start, end);
 	});
 }
+
+const ADJECTIVES = ['easiest', 'fastest', 'smartest', 'simplest', 'best', 'coolest'];
+export function getRandomAdj() {
+	const i = Math.floor(Math.random() * ADJECTIVES.length);
+	return ADJECTIVES[i];
+}

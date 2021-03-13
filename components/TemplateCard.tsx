@@ -34,9 +34,9 @@ export default function TemplateCard({ template }: { template: Template }) {
 				<p className='card-text text-secondary lead mb-4'>{template.description}</p>
 			</div>
 
-			<div className='card-footer bg-white py-3 border-0 text-center'>
+			{/* user tags */}
+			{/* <div className='card-footer bg-white py-3 border-0 text-center'>
 				<hr />
-				{/* user tags */}
 				<ul className='list-inline mt-1'>
 					<li className='list-inline-item'>
 						<small>
@@ -53,7 +53,7 @@ export default function TemplateCard({ template }: { template: Template }) {
 						</small>
 					</li>
 				</ul>
-			</div>
+			</div> */}
 		</div>
 	);
 }
