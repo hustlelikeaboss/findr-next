@@ -1,5 +1,5 @@
 import React from 'react';
-import { Template } from '../data/repositories/Template';
+import { Template } from '~/data/repositories/Template';
 import TemplateImageLink from './TemplateImageLink';
 
 export default function TemplateCard({ template }: { template: Template }) {

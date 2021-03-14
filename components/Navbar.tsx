@@ -1,5 +1,5 @@
 import { signIn, signOut, useSession } from 'next-auth/client';
-import { useSearch } from '../hooks';
+import { useSearch } from '~/hooks/search';
 
 export default function Navbar() {
 	const [session] = useSession();
@@ -82,7 +82,7 @@ export default function Navbar() {
 								<a className='dropdown-item' href='#'>
 									<i className='far fa-bookmark pr-2'></i>Library
 								</a>
-								<a className='dropdown-item' href='/subscription'>
+								<a className='dropdown-item' href='#'>
 									<i className='far fa-chart-bar pr-2'></i>Subscription
 								</a>
 								<div className='dropdown-divider'></div>

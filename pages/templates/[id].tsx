@@ -2,9 +2,9 @@ import React from 'react';
 import useSwr from 'swr';
 import { useRouter } from 'next/router';
 
-import { Template } from '../../data/repositories/Template';
-import TemplateFamilyLink from '../../components/TemplateFamilyLink';
-import TemplateImageLink from '../../components/TemplateImageLink';
+import { Template } from '~/data/repositories/Template';
+import TemplateFamilyLink from '~/components/TemplateFamilyLink';
+import TemplateImageLink from '~/components/TemplateImageLink';
 
 export default function TemplateDetails() {
 	const router = useRouter();

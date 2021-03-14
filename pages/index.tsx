@@ -1,5 +1,5 @@
-import { useSearch } from '../hooks';
-import { getRandomAdj } from '../lib/utils';
+import { useSearch } from 'hooks/search';
+import { getRandomAdj } from '~/lib/utils';
 import { SignInCard } from './auth/login';
 
 export default function Home() {

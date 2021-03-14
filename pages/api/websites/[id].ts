@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import WebsiteRepo from '../../../data/repositories/Website';
-import { reqQueryToInt, toJsonErrors } from '../../../lib/utils';
+import WebsiteRepo from '~/data/repositories/Website';
+import { reqQueryToInt, toJsonErrors } from '~/lib/utils';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {

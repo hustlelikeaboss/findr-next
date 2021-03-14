@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import Scraper from '../../../lib/theme-scraper';
-import Platform from '../../../lib/theme-scraper/Platform';
-import TemplateRepo, { Template } from '../../../data/repositories/Template';
-import TemplateFamilyRepo, { TemplateFamily } from '../../../data/repositories/TemplateFamily';
-import SearchRepo, { Website } from '../../../data/repositories/Website';
-import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '../../../lib/utils';
+import Scraper from '~/lib/theme-scraper';
+import Platform from '~/lib/theme-scraper/Platform';
+import TemplateRepo, { Template } from '~/data/repositories/Template';
+import TemplateFamilyRepo, { TemplateFamily } from '~/data/repositories/TemplateFamily';
+import SearchRepo, { Website } from '~/data/repositories/Website';
+import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '~/lib/utils';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {

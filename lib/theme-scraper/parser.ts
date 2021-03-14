@@ -1,4 +1,4 @@
-import { Template } from '../../data/repositories/Template';
+import { Template } from '~/data/repositories/Template';
 import Platform from './Platform';
 
 const SQUARESPACE_THEME_REGEX = /("templateId":")(?<themeId>\w{11,})(")/gm;

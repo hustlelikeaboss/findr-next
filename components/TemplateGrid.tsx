@@ -1,6 +1,6 @@
 import React from 'react';
-import { Template } from '../data/repositories/Template';
-import { splitArrByLength } from '../lib/utils';
+import { Template } from '~/data/repositories/Template';
+import { splitArrByLength } from '~/lib/utils';
 import TemplateCard from './TemplateCard';
 
 export default function TemplateGrid({ templates }: { templates?: Template[] }) {

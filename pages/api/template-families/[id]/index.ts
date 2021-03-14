@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import TemplateFamilyRepo from '../../../../data/repositories/TemplateFamily';
+import TemplateFamilyRepo from '~/data/repositories/TemplateFamily';
 import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '../../../../lib/utils';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

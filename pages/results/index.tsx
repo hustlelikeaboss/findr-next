@@ -1,9 +1,9 @@
 import useSwr from 'swr';
 import { useRouter } from 'next/router';
 
-import { WebsiteDetails } from '../../lib/theme-scraper/parser';
-import TemplateGrid from '../../components/TemplateGrid';
-import Platform from '../../lib/theme-scraper/Platform';
+import { WebsiteDetails } from '~/lib/theme-scraper/parser';
+import TemplateGrid from '~/components/TemplateGrid';
+import Platform from '~/lib/theme-scraper/Platform';
 
 export default function Results() {
 	const router = useRouter();
@@ -95,7 +95,10 @@ function TemplateFamilyStats({ details }: { details: WebsiteDetails }) {
 					{details.platform === Platform.WORDPRESS && (
 						<p>
 							This website is built on <b>WordPress</b> and it's using the{' '}
-							<i><b>{details.themeName}</b></i> theme.
+							<i>
+								<b>{details.themeName}</b>
+							</i>{' '}
+							theme.
 						</p>
 					)}
 
