@@ -2,13 +2,13 @@ import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/client';
 import useSwr from 'swr';
 
-import loadClientStripe from '~/lib/stripe/get-stripejs';
-import { safePost } from '~/lib/stripe/api-helpers';
+import loadClientStripe from '~/lib/stripe/client-side';
+import { safePost } from '~/lib/api-helpers';
 
 import { Customer } from '~/data/repositories/Customer';
 import { fetchCustomerByEmail } from './subscription';
 
-export default function Subsribe() {
+export default function SignUp() {
 	return (
 		<main>
 			<Plans />
@@ -96,7 +96,7 @@ function PlanCard({ plan }: { plan: Plan }) {
 	const [loading, setLoading] = useState(false);
 
 	const { data: customer, error } = useSwr<Customer>([session?.user?.email], fetchCustomerByEmail, {
-		errorRetryCount: 5,
+		errorRetryCount: 0,
 	});
 
 	useEffect(() => {
@@ -122,7 +122,7 @@ function PlanCard({ plan }: { plan: Plan }) {
 		if (loading) return;
 
 		setRedirecting(true);
-		const response = await safePost('/api/stripe/checkout_sessions', {
+		const response = await safePost('/api/stripe/checkout-sessions', {
 			priceId: plan.stripePriceId,
 			email: session?.user?.email,
 			customerId: customer?.customerId,

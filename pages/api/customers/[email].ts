@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import CustomerRepo from '~/data/repositories/Customer';
-import { reqQueryToInt, toJsonErrors } from '~/lib/utils';
+import { toJsonErrors } from '~/lib/api-helpers';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {

@@ -4,7 +4,7 @@ import Platform from '~/lib/theme-scraper/Platform';
 import TemplateRepo, { Template } from '~/data/repositories/Template';
 import TemplateFamilyRepo, { TemplateFamily } from '~/data/repositories/TemplateFamily';
 import SearchRepo, { Website } from '~/data/repositories/Website';
-import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '~/lib/utils';
+import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '~/lib/api-helpers';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {

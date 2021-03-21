@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import TemplateRepo from '~/data/repositories/Template';
-import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '../../../../lib/utils';
+import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '~/lib/api-helpers';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {

@@ -1,13 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
-import initServerStripe from '~/lib/stripe/init-stripe';
+import initServerStripe from '~/lib/stripe/server-side';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === 'POST') {
 		const { priceId, email, customerId } = req.body;
 		if (!(email || customerId)) {
 			res.status(403).end();
 		}
+
 		try {
 			// DOC: https://stripe.com/docs/api/checkout/sessions/create
 			const params: Stripe.Checkout.SessionCreateParams = {
@@ -21,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 						},
 					],
 					success_url: `${req.headers.origin}/subscription?session_id={CHECKOUT_SESSION_ID}`,
-					cancel_url: `${req.headers.origin}/subscribe`,
+					cancel_url: `${req.headers.origin}/signup`,
 				},
 				// can only send one of the two, use existing customerId if exists
 				...(customerId ? { customer: customerId } : { customer_email: email }),
@@ -37,6 +38,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		}
 	} else {
 		res.setHeader('Allow', 'POST');
-		res.status(405).end('Method Not Allowed');
+		res.status(405).end(`Method ${req.method} Not Allowed`);
 	}
-}
+};

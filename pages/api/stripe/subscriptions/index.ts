@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
-import initServerStripe from '~/lib/stripe/init-stripe';
+import initServerStripe from '~/lib/stripe/server-side';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { customerId, status } = req.query;

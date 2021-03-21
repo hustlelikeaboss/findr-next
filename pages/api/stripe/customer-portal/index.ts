@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'next-auth/jwt';
 
 import CustomerRepo, { Customer } from '~/data/repositories/Customer';
-import initServerStripe from '~/lib/stripe/init-stripe';
+import initServerStripe from '~/lib/stripe/server-side';
 import { toJsonErrors } from '~/lib/utils';
 
 const secret = process.env.SECRET;

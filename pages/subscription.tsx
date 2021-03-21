@@ -3,10 +3,11 @@ import { useRouter } from 'next/router';
 import useSwr from 'swr';
 import Stripe from 'stripe';
 
-import { plans } from './subscribe';
+import { plans } from './signup';
 import { useSession } from 'next-auth/client';
 import { Customer } from '~/data/repositories/Customer';
-import { safeGet } from '~/lib/stripe/api-helpers';
+import { safeGet } from '~/lib/api-helpers';
+import initCustomerPortal from '~/hooks/customer-portal';
 
 export default function Subscription() {
 	const [session] = useSession();
@@ -25,7 +26,7 @@ export default function Subscription() {
 	useEffect(() => {
 		const message = error?.toString();
 		if (message === 'Error: Not Found') {
-			router.push('/subscribe');
+			router.push('/signup');
 			return;
 		}
 		setMessage(message);
@@ -131,13 +132,16 @@ function timestampToDateString(timestamp: number, fallback = ''): string {
 }
 
 function SubscriptionDetails({ subscriptionId }: { subscriptionId?: string }) {
-	const { data: subscription, error } = useSwr(
+	const { data: subscription, error: fetchSubscriptionByIdError } = useSwr(
 		[subscriptionId, 'fetchSubscriptionById'],
 		fetchSubscriptionById
 	);
 
+	const { manageSubscription, error: initCustomerPortalError } = initCustomerPortal();
+
 	if (!subscriptionId) return null;
-	if (error) return <div>Failed</div>;
+	if (fetchSubscriptionByIdError) return <div>Failed to load subscription details</div>;
+	if (initCustomerPortalError) return <div>Failed to init customer portal</div>;
 	if (!subscription) return <div>Loading</div>;
 
 	const { status, start_date, trial_end } = subscription;
@@ -147,7 +151,7 @@ function SubscriptionDetails({ subscriptionId }: { subscriptionId?: string }) {
 			<div className='form-row align-middle'>
 				<div className='col-md-8 mb-3'>
 					<label className='text-secondary' htmlFor='exampleFormControlSelect1'>
-						<small>Membership</small>
+						<small>Current Plan</small>
 						<i className='far fa-check-circle text-success pl-1' title={status}></i>
 					</label>
 					<div className='input-group'>
@@ -173,7 +177,11 @@ function SubscriptionDetails({ subscriptionId }: { subscriptionId?: string }) {
 							))}
 						</select>
 
-						<button className='btn btn-warning rounded-0' type='submit'>
+						<button
+							className='btn btn-warning rounded-0'
+							type='button'
+							onClick={manageSubscription}
+						>
 							Upgrade
 						</button>
 					</div>
@@ -242,27 +250,14 @@ function SubscriptionHistory({ customerId }: { customerId?: string }) {
 }
 
 function ManageSubscription({ email }: { email?: string }) {
-	if (!email) return null;
-
-	const { data, error } = useSwr([email, 'fetchCustomerPortal'], fetchCustomerPortal);
-
+	const { error, manageSubscription } = initCustomerPortal();
 	if (error) return <p>Failed to init customer portal: {error?.toString()}</p>;
 
 	return (
 		<div className='mt-3'>
 			<hr />
-			<button
-				className='btn btn-info float-right'
-				type='button'
-				onClick={(e) => {
-					e.preventDefault();
-
-					const customerPortalUrl = data?.url;
-					if (!customerPortalUrl) return;
-					window.location.href = customerPortalUrl;
-				}}
-			>
-				<small className=''>Manage Subscription</small>
+			<button className='btn btn-info float-right' type='button' onClick={manageSubscription}>
+				Manage Subscription
 			</button>
 		</div>
 	);
