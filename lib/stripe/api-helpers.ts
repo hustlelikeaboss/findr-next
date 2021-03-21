@@ -7,7 +7,7 @@ export async function safeGet(url: string) {
 	}
 }
 
-export async function safePost(url: string, data?: {}) {
+export async function safePost(url: string, data: { [key: string]: any }) {
 	try {
 		const response = await fetch(url, {
 			method: 'POST',

@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-
 import Stripe from 'stripe';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-	// https://github.com/stripe/stripe-node#configuration
-	apiVersion: null,
-});
+import initServerStripe from '~/lib/stripe/init-stripe';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { customerId, status } = req.query;
@@ -13,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		if (!(customerId as string).startsWith('cu')) {
 			throw Error('Incorrect Customer ID.');
 		}
-		const { data: subscriptions } = await stripe.subscriptions.list({
+		const { data: subscriptions } = await initServerStripe().subscriptions.list({
 			customer: customerId as string,
 			status: status as Stripe.SubscriptionListParams.Status,
 		});

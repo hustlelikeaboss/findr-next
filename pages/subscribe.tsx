@@ -2,7 +2,7 @@ import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/client';
 import useSwr from 'swr';
 
-import getStripe from '~/lib/stripe/get-stripejs';
+import loadClientStripe from '~/lib/stripe/get-stripejs';
 import { safePost } from '~/lib/stripe/api-helpers';
 
 import { Customer } from '~/data/repositories/Customer';
@@ -134,7 +134,7 @@ function PlanCard({ plan }: { plan: Plan }) {
 		}
 
 		// Redirect to Checkout.
-		const stripe = await getStripe();
+		const stripe = await loadClientStripe();
 		const { error } = await stripe?.redirectToCheckout({
 			sessionId: response.id,
 		});

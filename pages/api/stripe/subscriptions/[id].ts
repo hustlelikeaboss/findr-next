@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-
 import Stripe from 'stripe';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-	// https://github.com/stripe/stripe-node#configuration
-	apiVersion: null,
-});
+import initServerStripe from '~/lib/stripe/init-stripe';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const id: string = req.query.id as string;
@@ -13,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		if (!id.startsWith('sub_')) {
 			throw Error('Incorrect Subscription ID.');
 		}
-		const subscription: Stripe.Subscription = await stripe.subscriptions.retrieve(id);
+		const subscription: Stripe.Subscription = await initServerStripe().subscriptions.retrieve(id);
 		res.status(200).json(subscription);
 	} catch (err) {
 		res.status(500).json({ statusCode: 500, message: err.message });

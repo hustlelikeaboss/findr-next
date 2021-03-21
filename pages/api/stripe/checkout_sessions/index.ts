@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-
 import Stripe from 'stripe';
-
-// DOC: https://github.com/stripe/stripe-node#configuration
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-	apiVersion: null,
-});
+import initServerStripe from '~/lib/stripe/init-stripe';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === 'POST') {
@@ -32,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				...(customerId ? { customer: customerId } : { customer_email: email }),
 			};
 
-			const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
+			const checkoutSession: Stripe.Checkout.Session = await initServerStripe().checkout.sessions.create(
 				params
 			);
 

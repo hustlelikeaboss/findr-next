@@ -6,14 +6,15 @@ import Stripe from 'stripe';
 import { plans } from './subscribe';
 import { useSession } from 'next-auth/client';
 import { Customer } from '~/data/repositories/Customer';
-import { safePost } from '~/lib/stripe/api-helpers';
+import { safeGet } from '~/lib/stripe/api-helpers';
 
 export default function Subscription() {
 	const [session] = useSession();
 	const router = useRouter();
 
+	const email = session?.user?.email;
 	const { data: customer, error, isValidating: loading } = useSwr<Customer>(
-		[session?.user?.email, 'fetchCustomerByEmail'],
+		[email, 'fetchCustomerByEmail'],
 		fetchCustomerByEmail,
 		{
 			errorRetryCount: 0,
@@ -54,7 +55,7 @@ export default function Subscription() {
 
 							<SubscriptionHistory customerId={customer?.customerId} />
 
-							<ManageSubscription customerId={customer?.customerId} />
+							<ManageSubscription email={email} />
 						</>
 					)}
 				</div>
@@ -81,10 +82,8 @@ function fetchAllSubscriptionsByCustomerId(customerId: string): Promise<Stripe.S
 function fetchActiveSubscriptionsByCustomerId(customerId: string): Promise<Stripe.Subscription[]> {
 	return fetchSubscriptions(customerId)('active');
 }
-function fetchCustomerPortal(customerId: string): Promise<{ url: string }> {
-	return safePost('/api/stripe/customer-portal', {
-		customerId,
-	});
+function fetchCustomerPortal(): Promise<{ url: string }> {
+	return safeGet('/api/stripe/customer-portal');
 }
 
 async function fetchSubscriptionById(subscriptionId: string): Promise<Stripe.Subscription> {
@@ -242,10 +241,10 @@ function SubscriptionHistory({ customerId }: { customerId?: string }) {
 	);
 }
 
-function ManageSubscription({ customerId }: { customerId?: string }) {
-	if (!customerId) return null;
+function ManageSubscription({ email }: { email?: string }) {
+	if (!email) return null;
 
-	const { data, error } = useSwr([customerId, 'fetchCustomerPortal'], fetchCustomerPortal);
+	const { data, error } = useSwr([email, 'fetchCustomerPortal'], fetchCustomerPortal);
 
 	if (error) return <p>Failed to init customer portal: {error?.toString()}</p>;
 
@@ -255,7 +254,9 @@ function ManageSubscription({ customerId }: { customerId?: string }) {
 			<button
 				className='btn btn-info float-right'
 				type='button'
-				onClick={() => {
+				onClick={(e) => {
+					e.preventDefault();
+
 					const customerPortalUrl = data?.url;
 					if (!customerPortalUrl) return;
 					window.location.href = customerPortalUrl;
