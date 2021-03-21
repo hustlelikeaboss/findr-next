@@ -82,7 +82,7 @@ export default function Navbar() {
 								<a className='dropdown-item' href='#'>
 									<i className='far fa-bookmark pr-2'></i>Library
 								</a>
-								<a className='dropdown-item' href='#'>
+								<a className='dropdown-item' href='/subscription'>
 									<i className='far fa-chart-bar pr-2'></i>Subscription
 								</a>
 								<div className='dropdown-divider'></div>

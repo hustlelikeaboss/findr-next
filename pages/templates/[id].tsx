@@ -11,7 +11,7 @@ export default function TemplateDetails() {
 	const { id } = router.query;
 
 	const { data: template, error } = useSwr<Template>([id], fetchTemplateById);
-	if (error) return <div>failed</div>;
+	if (error) return <div>Failed</div>;
 	if (!template) return <div>Loading</div>;
 
 	return (

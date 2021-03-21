@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/client';
 
-export default function SignIn({}) {
+export default function Profile({}) {
 	const [session] = useSession();
 
 	return (
@@ -13,7 +13,8 @@ export default function SignIn({}) {
 						backgroundSize: 'cover',
 						minHeight: '100vh',
 					}}
-				></div>
+				/>
+
 				<div className='col-lg-4 col-md-8 col-sm-12 py-5 m-auto'>
 					<h2
 						className='text-center display-4 mb-5'

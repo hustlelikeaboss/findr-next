@@ -92,7 +92,7 @@ export default NextAuth({
 		signOut: '/',
 		// error: '/auth/error', // Error code passed in query string as ?error=
 		verifyRequest: '/auth/verify-request', // Used for check email page
-		newUser: '/profile', // If set, new users will be directed here on first sign in
+		newUser: '/subscribe', // If set, new users will be directed here on first sign in
 	},
 
 	// Callbacks are asynchronous functions you can use to control what happens
