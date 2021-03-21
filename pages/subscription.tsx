@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import useSwr from 'swr';
-import axios from 'axios';
+import Stripe from 'stripe';
 
 import { plans } from './subscribe';
 import { useSession } from 'next-auth/client';
 import { Customer } from '~/data/repositories/Customer';
-import Stripe from 'stripe';
-import { useRouter } from 'next/router';
+import { safePost } from '~/lib/stripe/api-helpers';
 
 export default function Subscription() {
 	const [session] = useSession();
 	const router = useRouter();
 
 	const { data: customer, error, isValidating: loading } = useSwr<Customer>(
-		[session?.user?.email],
+		[session?.user?.email, 'fetchCustomerByEmail'],
 		fetchCustomerByEmail,
 		{
 			errorRetryCount: 0,
@@ -50,13 +50,11 @@ export default function Subscription() {
 						<p>Data fetch failed: {message}. Please try again later.</p>
 					) : (
 						<>
-							{/* <!-- membership --> */}
 							<SubscriptionDetails subscriptionId={customer?.subscriptionId} />
 
-							{/* <!-- payment history --> */}
 							<SubscriptionHistory customerId={customer?.customerId} />
 
-							<ManageSubscription />
+							<ManageSubscription customerId={customer?.customerId} />
 						</>
 					)}
 				</div>
@@ -82,6 +80,11 @@ function fetchAllSubscriptionsByCustomerId(customerId: string): Promise<Stripe.S
 
 function fetchActiveSubscriptionsByCustomerId(customerId: string): Promise<Stripe.Subscription[]> {
 	return fetchSubscriptions(customerId)('active');
+}
+function fetchCustomerPortal(customerId: string): Promise<{ url: string }> {
+	return safePost('/api/stripe/customer-portal', {
+		customerId,
+	});
 }
 
 async function fetchSubscriptionById(subscriptionId: string): Promise<Stripe.Subscription> {
@@ -113,7 +116,6 @@ const fetchSubscriptions = (customerId: string) => async (
 		const res = await fetch(
 			`/api/stripe/subscriptions?customerId=${customerId}${status ? `&status=${status}` : ''}`
 		);
-		console.log('res: ', res);
 		if (res.status != 200) {
 			console.log('Error: ', res.statusText);
 			return;
@@ -130,7 +132,10 @@ function timestampToDateString(timestamp: number, fallback = ''): string {
 }
 
 function SubscriptionDetails({ subscriptionId }: { subscriptionId?: string }) {
-	const { data: subscription, error } = useSwr([subscriptionId], fetchSubscriptionById);
+	const { data: subscription, error } = useSwr(
+		[subscriptionId, 'fetchSubscriptionById'],
+		fetchSubscriptionById
+	);
 
 	if (!subscriptionId) return null;
 	if (error) return <div>Failed</div>;
@@ -196,7 +201,10 @@ function SubscriptionDetails({ subscriptionId }: { subscriptionId?: string }) {
 }
 
 function SubscriptionHistory({ customerId }: { customerId?: string }) {
-	const { data: subscriptions, error } = useSwr([customerId], fetchActiveSubscriptionsByCustomerId);
+	const { data: subscriptions, error } = useSwr(
+		[customerId, 'fetchActiveSubscriptionsByCustomerId'],
+		fetchActiveSubscriptionsByCustomerId
+	);
 
 	if (!customerId) return null;
 	if (error) return <div>Failed</div>;
@@ -236,10 +244,23 @@ function SubscriptionHistory({ customerId }: { customerId?: string }) {
 
 function ManageSubscription({ customerId }: { customerId?: string }) {
 	if (!customerId) return null;
+
+	const { data, error } = useSwr([customerId, 'fetchCustomerPortal'], fetchCustomerPortal);
+
+	if (error) return <p>Failed to init customer portal: {error?.toString()}</p>;
+
 	return (
 		<div className='mt-3'>
 			<hr />
-			<button className='btn btn-info float-right' type='button'>
+			<button
+				className='btn btn-info float-right'
+				type='button'
+				onClick={() => {
+					const customerPortalUrl = data?.url;
+					if (!customerPortalUrl) return;
+					window.location.href = customerPortalUrl;
+				}}
+			>
 				<small className=''>Manage Subscription</small>
 			</button>
 		</div>
