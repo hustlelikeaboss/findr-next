@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import TemplateFamilyRepo from '~/data/repositories/TemplateFamily';
-import { reqQueryToInt, toJsonErrors } from '~/lib/api-helpers';
+import { reqQueryToInt } from '~/lib/api-helpers';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {
@@ -28,6 +28,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 	} catch (err) {
 		console.error(err);
-		res.status(err?.status || 500).json(toJsonErrors(err));
+		res.status(err?.status || 500).json(err?.message);
 	}
 };

@@ -18,29 +18,25 @@ export function reqQueryToStr(query: string | string[]): string {
 	return query;
 }
 
-export function toJsonErrors(error: any) {
-	return {
-		errors: [
-			{
-				status: error?.status || 500,
-				message: error?.message || error?.toString() || 'unexpected error',
-			},
-		],
-	};
-}
-
 export async function safeGet(url: string) {
+	let res: Response;
 	try {
-		const data = await fetch(url).then((res) => res.json());
-		return data;
+		res = await fetch(url);
 	} catch (err) {
-		throw new Error(err.message);
+		console.log('safeGet err: ', err?.message);
+		throw new Error(err?.message);
 	}
+
+	if (res.ok) {
+		return res.json();
+	}
+	throw new Error(await res?.text());
 }
 
 export async function safePost(url: string, data: { [key: string]: any }) {
+	let res: Response;
 	try {
-		const response = await fetch(url, {
+		res = await fetch(url, {
 			method: 'POST',
 			cache: 'no-cache',
 			headers: {
@@ -49,8 +45,12 @@ export async function safePost(url: string, data: { [key: string]: any }) {
 			referrerPolicy: 'no-referrer',
 			body: JSON.stringify(data || {}),
 		});
-		return response?.json();
 	} catch (err) {
-		throw new Error(err.message);
+		throw new Error(err?.message);
 	}
+
+	if (res.ok) {
+		return res.json();
+	}
+	throw new Error(await res?.text());
 }

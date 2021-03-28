@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import CustomerRepo from '~/data/repositories/Customer';
-import { toJsonErrors } from '~/lib/api-helpers';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {
@@ -12,7 +11,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		switch (method) {
 			case 'GET':
 				const data = await CustomerRepo.findOneByEmail(email as string);
-				res.status(data ? 200 : 404).json(data);
+				if (data) {
+					res.status(200).json(data);
+				} else {
+					res.status(404).json(`Customer with email ${email} not found`);
+				}
 				break;
 			default:
 				res.setHeader('Allow', ['GET']);
@@ -20,6 +23,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 	} catch (err) {
 		console.error(err);
-		res.status(err?.status || 500).json(toJsonErrors(err));
+		res.status(err?.status || 500).json(err?.message);
 	}
 };
