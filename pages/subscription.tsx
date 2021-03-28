@@ -1,36 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import useSwr from 'swr';
 import Stripe from 'stripe';
 
 import { plans } from './signup';
-import { useSession } from 'next-auth/client';
 import { Customer } from '~/data/repositories/Customer';
 import { safeGet } from '~/lib/api-helpers';
-import initCustomerPortal from '~/hooks/customer-portal';
+import useCustomerPortal from '~/hooks/customer-portal';
+import useCustomer from '~/hooks/customer';
 
 export default function Subscription() {
-	const [session] = useSession();
+	const { loading, error, customer } = useCustomer();
 	const router = useRouter();
 
-	const email = session?.user?.email;
-	const { data: customer, error, isValidating: loading } = useSwr<Customer>(
-		[email, 'fetchCustomerByEmail'],
-		fetchCustomerByEmail,
-		{
-			errorRetryCount: 0,
-		}
-	);
+	if (loading) return <p>Loading</p>;
 
-	const [message, setMessage] = useState('');
-	useEffect(() => {
-		const message = error?.toString();
-		if (message === 'Error: Not Found') {
-			router.push('/signup');
-			return;
-		}
-		setMessage(message);
-	}, [error]);
+	if (!customer) {
+		router.push(`/signup`);
+		return;
+	}
 
 	return (
 		<main className='container-fluid' id='hero-08' style={{ background: '#E3F4FC' }}>
@@ -45,20 +33,20 @@ export default function Subscription() {
 				></div>
 				<div className='col-lg-4 col-md-8 col-sm-12 py-5 m-auto'>
 					<h2 className='text-center display-4 mb-5'>Subscription</h2>
-
+					{/* 
 					{loading ? (
 						<p>Fetching your subscription from Stripe...</p>
-					) : message ? (
-						<p>Data fetch failed: {message}. Please try again later.</p>
-					) : (
-						<>
-							<SubscriptionDetails subscriptionId={customer?.subscriptionId} />
+					) : error ? (
+						<p>Data fetch failed: {error.message}. Please try again later.</p>
+					) : ( */}
+					<>
+						<SubscriptionDetails subscriptionId={customer?.subscriptionId} />
 
-							<SubscriptionHistory customerId={customer?.customerId} />
+						<SubscriptionHistory customerId={customer?.customerId} />
 
-							<ManageSubscription email={email} />
-						</>
-					)}
+						<ManageSubscription email={customer?.email} />
+					</>
+					{/* )} */}
 				</div>
 			</div>
 		</main>
@@ -137,7 +125,7 @@ function SubscriptionDetails({ subscriptionId }: { subscriptionId?: string }) {
 		fetchSubscriptionById
 	);
 
-	const { manageSubscription, error: initCustomerPortalError } = initCustomerPortal();
+	const { manageSubscription, error: initCustomerPortalError } = useCustomerPortal();
 
 	if (!subscriptionId) return null;
 	if (fetchSubscriptionByIdError) return <div>Failed to load subscription details</div>;
@@ -250,7 +238,7 @@ function SubscriptionHistory({ customerId }: { customerId?: string }) {
 }
 
 function ManageSubscription({ email }: { email?: string }) {
-	const { error, manageSubscription } = initCustomerPortal();
+	const { error, manageSubscription } = useCustomerPortal();
 	if (error) return <p>Failed to init customer portal: {error?.toString()}</p>;
 
 	return (

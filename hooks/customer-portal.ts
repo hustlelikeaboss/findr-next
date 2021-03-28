@@ -7,7 +7,7 @@ function fetchCustomerPortal(): Promise<{ url: string }> {
 	return safeGet('/api/stripe/customer-portal');
 }
 
-export default function initCustomerPortal() {
+export default function useCustomerPortal() {
 	const { data, error } = useSwr(['fetchCustomerPortal'], fetchCustomerPortal);
 
 	const manageSubscription = useCallback(

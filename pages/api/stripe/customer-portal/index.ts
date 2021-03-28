@@ -1,16 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import jwt from 'next-auth/jwt';
+import { getSession } from 'next-auth/client';
 
 import CustomerRepo, { Customer } from '~/data/repositories/Customer';
 import initServerStripe from '~/lib/stripe/server-side';
-import { toJsonErrors } from '~/lib/utils';
-
-const secret = process.env.SECRET;
-type SessionUser = {
-	name?: string;
-	email?: string;
-	picture?: string;
-};
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const { method } = req;
@@ -18,21 +10,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		switch (method) {
 			case 'GET':
-				const { email } = (await jwt.getToken({ req, secret })) as SessionUser;
+				const { email } = (await getSession({ req }))?.user;
 
 				let message = '';
 				if (!email) {
-					message = `User not authenticated`;
+					message = `User not logged in`;
 					console.debug(message);
-					res.status(403).send(message);
+					res.status(401).send(message);
 				}
 
 				const { customerId } = (await CustomerRepo.findOneByEmail(email)) as Customer;
-
 				if (!customerId) {
-					message = `Email ${email} not associated with any customer`;
+					message = `User with ${email} not subscribed`;
 					console.debug(message);
-					res.status(404).send(message);
+					res.status(403).send(message);
 				}
 
 				// redirect link from the portal.
@@ -53,6 +44,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 	} catch (err) {
 		console.error(err);
-		res.status(err?.status || 500).json(toJsonErrors(err));
+		res.status(err?.status || 500).json(err?.message);
 	}
 };

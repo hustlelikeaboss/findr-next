@@ -1,12 +1,9 @@
-import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
+import React, { CSSProperties, useCallback, useState } from 'react';
 import { useSession } from 'next-auth/client';
-import useSwr from 'swr';
 
 import loadClientStripe from '~/lib/stripe/client-side';
 import { safePost } from '~/lib/api-helpers';
-
-import { Customer } from '~/data/repositories/Customer';
-import { fetchCustomerByEmail } from './subscription';
+import useCustomer from '~/hooks/customer';
 
 export default function SignUp() {
 	return (
@@ -91,33 +88,7 @@ export function Plans({ style }: { style?: CSSProperties }) {
 function PlanCard({ plan }: { plan: Plan }) {
 	const [session] = useSession();
 	const [redirecting, setRedirecting] = useState<boolean>(false);
-
-	const [message, setMessage] = useState('');
-	const [loading, setLoading] = useState(false);
-
-	const { data: customer, error } = useSwr<Customer>([session?.user?.email], fetchCustomerByEmail, {
-		errorRetryCount: 0,
-	});
-
-	useEffect(() => {
-		if (error) {
-			setLoading(false);
-
-			// if user is not subscribed, redirect
-			const status = error?.response?.status;
-			if (status === 404) {
-				console.log('user is not subscribed');
-				return /* noop */;
-			}
-
-			setMessage(error.toString());
-		} else if (!customer) {
-			setLoading(true);
-		} else {
-			setLoading(false);
-		}
-	}, [customer, error]);
-
+	const { customer, loading, error } = useCustomer();
 	const subscribe = useCallback(async () => {
 		if (loading) return;
 

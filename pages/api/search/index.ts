@@ -1,10 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { getSession } from 'next-auth/client';
+
 import Scraper from '~/lib/theme-scraper';
 import Platform from '~/lib/theme-scraper/Platform';
+
 import TemplateRepo, { Template } from '~/data/repositories/Template';
 import TemplateFamilyRepo, { TemplateFamily } from '~/data/repositories/TemplateFamily';
 import SearchRepo, { Website } from '~/data/repositories/Website';
-import { reqQueryToInt, reqQueryToStr, toJsonErrors } from '~/lib/api-helpers';
+import CustomerRepo, { Customer } from '~/data/repositories/Customer';
+
+import { reqQueryToInt, reqQueryToStr } from '~/lib/api-helpers';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {
@@ -23,17 +28,40 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 		url = new URL(url).origin;
 	} catch (err) {
-		res.status(400).json(toJsonErrors(err));
+		res.status(400).json(err?.message);
 	}
 
 	try {
-		const search = (await SearchRepo.findOneByUrl(url)) as Website;
-		if (!search) {
+		// track searched website
+		const website = (await SearchRepo.findOneByUrl(url)) as Website;
+		if (!website) {
 			SearchRepo.create({ url, searchTimes: 1 });
 		} else {
-			SearchRepo.update({ ...search, searchTimes: search.searchTimes + 1 });
+			SearchRepo.update({ ...website, searchTimes: website.searchTimes + 1 });
 		}
 
+		// handle free tier customers
+		const { email } = (await getSession({ req }))?.user || {};
+		if (!email) {
+			res.status(401).send('User not logged in.');
+			return;
+		}
+		const { customerId, searchTimes, priceId } = ((await CustomerRepo.findOneByEmail(email)) ||
+			{}) as Customer;
+		if (!customerId) {
+			res.status(403).send('User not subscribed.');
+			return;
+		}
+		if (
+			priceId === process.env.PLAN_FREE &&
+			searchTimes === parseInt(process.env.MONTHLY_SEARCH_QUOTA)
+		) {
+			res.status(402).send('User exceeded monthly search quota.');
+			return;
+		}
+		CustomerRepo.updateByCustomerId({ customerId, searchTimes: searchTimes + 1 });
+
+		// handle search
 		switch (method) {
 			case 'POST':
 				let details = await new Scraper(url).scrape();
@@ -66,6 +94,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 	} catch (err) {
 		console.error(err);
-		res.status(err?.status || 500).json(toJsonErrors(err));
+		res.status(err?.status || 500).json(err?.message);
 	}
 };

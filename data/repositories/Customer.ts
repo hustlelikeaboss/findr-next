@@ -11,6 +11,7 @@ export type Customer = {
 	priceId?: string;
 	productId?: string;
 	status?: string;
+	searchTimes?: number;
 };
 
 class CustomerRepo extends Repository<Customer> {

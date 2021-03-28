@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { WebsiteDetails } from '~/lib/theme-scraper/parser';
 import TemplateGrid from '~/components/TemplateGrid';
 import Platform from '~/lib/theme-scraper/Platform';
+import { safePost } from '~/lib/api-helpers';
 
 export default function Results() {
 	const router = useRouter();
@@ -45,23 +46,7 @@ async function scapeWebsite(url: string, page: number, size: number) {
 		return;
 	}
 
-	const res = await fetch('/api/search', {
-		method: 'POST',
-		mode: 'same-origin',
-		cache: 'no-cache',
-		credentials: 'same-origin',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		redirect: 'follow',
-		referrerPolicy: 'no-referrer',
-		body: JSON.stringify({
-			url,
-			page,
-			size,
-		}),
-	});
-	return res.json();
+	return safePost('/api/search', { url, page, size });
 }
 
 function TemplateFamilyStats({ details }: { details: WebsiteDetails }) {
