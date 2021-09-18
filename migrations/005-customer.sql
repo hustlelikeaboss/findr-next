@@ -1,4 +1,3 @@
-DROP TABLE customers;
 CREATE TABLE IF NOT EXISTS customers (
     id SERIAL,
     email VARCHAR(255),

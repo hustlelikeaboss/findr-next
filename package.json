@@ -19,16 +19,16 @@
 	},
 	"dependencies": {
 		"@sqorn/pg": "0.0.45",
-		"@stripe/react-stripe-js": "^1.4.0",
-		"@stripe/stripe-js": "^1.13.1",
+		"@stripe/react-stripe-js": "^1.4.1",
+		"@stripe/stripe-js": "^1.17.1",
 		"micro": "^9.3.4",
 		"micro-cors": "^0.1.1",
-		"next": "^10.0.7",
-		"next-auth": "^3.7.0",
-		"pg": "^8.5.1",
+		"next": "^10.2.3",
+		"next-auth": "^3.29.0",
+		"pg": "^8.7.1",
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
-		"stripe": "^8.138.0",
+		"stripe": "^8.176.0",
 		"swr": "^0.1.18",
 		"use-shopping-cart": "^2.4.3"
 	},
@@ -38,15 +38,15 @@
 		"npm": "6.14.11"
 	},
 	"devDependencies": {
-		"@types/micro": "^7.3.3",
-		"@types/micro-cors": "^0.1.1",
-		"@types/next-auth": "^3.1.25",
-		"@types/node": "^14.14.31",
-		"@types/pg": "^7.14.10",
-		"@types/react": "^17.0.2",
-		"axios": "^0.21.1",
+		"@types/micro": "^7.3.6",
+		"@types/micro-cors": "^0.1.2",
+		"@types/next-auth": "^3.15.0",
+		"@types/node": "^14.17.17",
+		"@types/pg": "^7.14.11",
+		"@types/react": "^17.0.21",
+		"axios": "^0.21.4",
 		"babel-jest": "^26.6.3",
 		"jest": "^26.6.3",
-		"typescript": "^4.2.2"
+		"typescript": "^4.4.3"
 	}
 }
