@@ -1,4 +1,6 @@
-# findr
+# findr-next
+
+A Next.js rewrite of [the free Findr app](https://github.com/hustlelikeaboss/findr), now freemium
 
 ## Deploy your own
 
