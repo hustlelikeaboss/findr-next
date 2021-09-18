@@ -1,4 +1,4 @@
-import { getProviders, signIn, SessionProvider } from 'next-auth/client';
+import { getProviders, signIn, ClientSafeProvider } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -6,14 +6,11 @@ const authErrors = {
 	OAuthAccountNotLinked:
 		"You've previously used the same email address to log in via a different auth provider.",
 };
-export type GetProvidersResponse = {
-	[id: string]: SessionProvider;
-};
 
 export function LogInCard() {
-	const [providers, setProviders] = useState<GetProvidersResponse>({});
+	const [providers, setProviders] = useState<Record<string, ClientSafeProvider>>({});
 	useEffect(() => {
-		getProviders().then((res) => setProviders(res));
+		getProviders().then(setProviders);
 	}, []);
 
 	const router = useRouter();

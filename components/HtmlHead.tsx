@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-export default () => {
+export default function HtmlHead() {
 	return (
 		<Head>
 			<title>Findr: the simplest way to identify any Squarespace template</title>

@@ -1,4 +1,6 @@
-# findr
+# findr-next
+
+A Next.js rewrite of [the free Findr app](https://github.com/hustlelikeaboss/findr), now freemium
 
 ## Deploy your own
 
@@ -46,11 +48,9 @@ stripe products create --name="Genin" --description="- 10 searches a month"
 stripe products create --name="Chuunin" --description="- Unlimited searches"
 
 stripe products create --name="Jounin" --description="- Unlimited searches; -Template identification based on computer vision; - Personal library with favorites, categories, tags, and notes"
-
-
 ```
 
-Create the price for the premium product, passing the product ID from the response:
+Create the price for the premium product, passing the product ID from the responses above:
 
 ```
 stripe prices create \
