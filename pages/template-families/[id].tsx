@@ -1,11 +1,11 @@
 import useSwr from 'swr';
 import { useRouter } from 'next/router';
 
-import { WebsiteDetails } from '../../lib/theme-scraper/parser';
-import TemplateGrid from '../../components/TemplateGrid';
-import Platform from '../../lib/theme-scraper/Platform';
-import { TemplateFamily } from '../../data/repositories/TemplateFamily';
-import { Template } from '../../data/repositories/Template';
+import { WebsiteDetails } from '~/lib/theme-scraper/parser';
+import TemplateGrid from '~/components/TemplateGrid';
+import Platform from '~/lib/theme-scraper/Platform';
+import { TemplateFamily } from '~/data/repositories/TemplateFamily';
+import { Template } from '~/data/repositories/Template';
 import { SquarespaceTemplateFamilyStats } from '../results';
 
 export default function TemplateFamilyPage() {

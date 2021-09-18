@@ -1,5 +1,5 @@
 import useSwr from 'swr';
-import { TemplateFamily } from '../data/repositories/TemplateFamily';
+import { TemplateFamily } from '~/data/repositories/TemplateFamily';
 
 export async function fetchTemplateFamilyById(id: number | string): Promise<TemplateFamily> {
 	if (!id) {

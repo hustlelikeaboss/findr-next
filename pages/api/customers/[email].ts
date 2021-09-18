@@ -1,27 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import TemplateRepo from '~/data/repositories/Template';
-import { reqQueryToInt, reqQueryToStr } from '~/lib/api-helpers';
+import CustomerRepo from '~/data/repositories/Customer';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {
+		query: { email },
 		method,
-		query: { id, size, page },
 	} = req;
-
-	const where = reqQueryToInt(id)
-		? { id: reqQueryToInt(id) }
-		: { templateFamilyId: reqQueryToStr(id) };
 
 	try {
 		switch (method) {
 			case 'GET':
-				res.status(200).json(
-					await TemplateRepo.findMany({
-						size: reqQueryToInt(size),
-						page: reqQueryToInt(page),
-						where,
-					})
-				);
+				const data = await CustomerRepo.findOneByEmail(email as string);
+				if (data) {
+					res.status(200).json(data);
+				} else {
+					res.status(404).json(`Customer with email ${email} not found`);
+				}
 				break;
 			default:
 				res.setHeader('Allow', ['GET']);

@@ -10,7 +10,7 @@ export type GetProvidersResponse = {
 	[id: string]: SessionProvider;
 };
 
-export function SignInCard() {
+export function LogInCard() {
 	const [providers, setProviders] = useState<GetProvidersResponse>({});
 	useEffect(() => {
 		getProviders().then((res) => setProviders(res));
@@ -121,7 +121,7 @@ export default function Login() {
 			<div className='container d-flex flex-column' style={{ minHeight: '105vh' }}>
 				<div className='row my-auto'>
 					<div className='col-lg-5 col-md-10 col-sm-12 mx-auto my-5 py-5'>
-						<SignInCard />
+						<LogInCard />
 					</div>
 				</div>
 			</div>

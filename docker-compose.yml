@@ -11,9 +11,9 @@ services:
     ports:
       - 5436:5432
     volumes:
-      - ./001-init.sql:/docker-entrypoint-initdb.d/001-init.sql
-      - ./002-timestamp-triggers.sql:/docker-entrypoint-initdb.d/002-timestamp-triggers.sql
-      - ./003-cleanup.sql:/docker-entrypoint-initdb.d/003-cleanup.sql
+      - ./migrations/001-init.sql:/docker-entrypoint-initdb.d/001-init.sql
+      - ./migrations/002-timestamp-triggers.sql:/docker-entrypoint-initdb.d/002-timestamp-triggers.sql
+      - ./migrations/003-cleanup.sql:/docker-entrypoint-initdb.d/003-cleanup.sql
 
   adminer:
     image: adminer

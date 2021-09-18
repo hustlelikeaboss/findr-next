@@ -2,16 +2,16 @@ import React from 'react';
 import useSwr from 'swr';
 import { useRouter } from 'next/router';
 
-import { Template } from '../../data/repositories/Template';
-import TemplateFamilyLink from '../../components/TemplateFamilyLink';
-import TemplateImageLink from '../../components/TemplateImageLink';
+import { Template } from '~/data/repositories/Template';
+import TemplateFamilyLink from '~/components/TemplateFamilyLink';
+import TemplateImageLink from '~/components/TemplateImageLink';
 
 export default function TemplateDetails() {
 	const router = useRouter();
 	const { id } = router.query;
 
 	const { data: template, error } = useSwr<Template>([id], fetchTemplateById);
-	if (error) return <div>failed</div>;
+	if (error) return <div>Failed</div>;
 	if (!template) return <div>Loading</div>;
 
 	return (

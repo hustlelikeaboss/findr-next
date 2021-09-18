@@ -1,5 +1,5 @@
 import { signIn, signOut, useSession } from 'next-auth/client';
-import { useSearch } from '../hooks';
+import { useSearch } from '~/hooks/search';
 
 export default function Navbar() {
 	const [session] = useSession();

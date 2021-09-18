@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSearch } from '../../hooks';
+import { useSearch } from '~/hooks/search';
 
 export default function Search() {
 	const { inputRef, handleSubmit } = useSearch();

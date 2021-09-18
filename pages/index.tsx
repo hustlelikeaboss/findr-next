@@ -1,6 +1,7 @@
-import { useSearch } from '../hooks';
-import { getRandomAdj } from '../lib/utils';
-import { SignInCard } from './auth/login';
+import { useSearch } from 'hooks/search';
+import { getRandomAdj } from '~/lib/utils';
+import { LogInCard } from './auth/login';
+import { Plans } from './signup';
 
 export default function Home() {
 	return (
@@ -61,7 +62,7 @@ function Splash() {
 						<p className='mt-3 text-secondary'>
 							<small>
 								<i className='fa fa-info-circle mr-2'></i>
-								<a className='btn-link text-secondary' href='/'>
+								<a className='btn-link text-secondary' href='#'>
 									Learn more about <u>how and why</u>
 								</a>
 							</small>
@@ -155,7 +156,7 @@ function Login() {
 			<div className='container d-flex flex-column py-5' style={{ minHeight: '105vh' }}>
 				<div className='row my-auto'>
 					<div className='col-lg-5 col-md-12 col-sm-12 my-auto'>
-						<SignInCard />
+						<LogInCard />
 					</div>
 					<div className='col-lg-5 col-md-10 col-sm-12 m-auto py-5 my-auto'>
 						<h2 className='display-4 mb-3 text-white'>Be a design ninja</h2>
@@ -169,100 +170,6 @@ function Login() {
 						</a>
 					</div>
 				</div>
-			</div>
-		</div>
-	);
-}
-
-type Plan = {
-	level: number;
-	name: string;
-	features: string[];
-	cost: number;
-	highlighted?: boolean;
-};
-function Plans() {
-	const plans: Plan[] = [
-		{
-			level: 1,
-			name: 'Genin',
-			features: ['10 searches a month'],
-			cost: 0,
-		},
-		{
-			level: 2,
-			name: 'Chuunin',
-			features: ['Unlimited searches'],
-			cost: 2.99,
-			highlighted: true,
-		},
-		{
-			level: 3,
-			name: 'Jounin',
-			features: [
-				'Unlimited searches',
-				'Template identification based on computer vision',
-				'Personal library with favorites, categories, tags, and notes',
-			],
-			cost: 4.99,
-		},
-	];
-	return (
-		<div className='py-5 bg-light' id='pricing-01'>
-			<div className='container py-5 my-5'>
-				<div className='row py-3'>
-					<div className='col text-center'>
-						<h2 className='display-4 mb-3'>Pick a plan that works for you</h2>
-						<p className='lead text-secondary mb-5 pb-3 mx-5'>
-							We've got something for every design ninja
-						</p>
-					</div>
-				</div>
-				<div className='row'>
-					<div className='col-lg-12 col-md-12 mx-lg-auto'>
-						<div className='card-group'>
-							{plans.map((p) => (
-								<PlanCard p={p} key={p.level} />
-							))}
-						</div>
-					</div>
-				</div>
-				<div className='row'>
-					<div className='col text-center'>
-						<a className='btn text-secondary p-4' href='/features'>
-							<i className='fa fa-clone mr-2'></i>
-							<u>Learn more</u>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
-}
-
-function PlanCard({ p }: { p: Plan }) {
-	return (
-		<div className='card mb-3 text-center' key={p.level}>
-			<div className='card-body'>
-				<h5 className='text-secondary mt-3 mb-4'>
-					{p.name}
-					{p.highlighted && <span className='badge badge-pill badge-secondary ml-2'>Popular</span>}
-				</h5>
-				{p.features.map((f, i) => (
-					<p className='lead mb-3 text-secondary mx-4' key={i}>
-						<i className='fas fa-check fa-xs text-success mr-2' />
-						{f}
-					</p>
-				))}
-			</div>
-			<div className='card-footer bg-transparent border-0'>
-				<div className='mb-5'>
-					<span className='display-4'>{p.cost ? `$${p.cost}` : 'free'}</span>
-					{p.cost ? <span className='text-secondary'>&nbsp;/ month</span> : null}
-				</div>
-				<a className='btn btn-warning w-100 btn-lg mb-3' href={`/register?level=${p.level}`}>
-					Get started
-				</a>
 			</div>
 		</div>
 	);
