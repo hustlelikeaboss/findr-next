@@ -48,7 +48,7 @@ function Splash() {
 										required
 										autoFocus
 									/>
-									<div className='invalid-feedback'>Please provide a valid URL.</div>
+									{/* <div className='invalid-feedback'>Please provide a valid URL.</div> */}
 								</div>
 								<div className='col-lg-4 col-md-8 col-sm-12 pb-2 mx-auto mx-lg-0'>
 									<button className='btn btn-warning w-100 btn-lg border-0' type='submit'>
