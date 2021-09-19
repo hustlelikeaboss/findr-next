@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import useCustomer from './customer';
 
@@ -7,19 +7,25 @@ export function useSearch() {
 	const router = useRouter();
 	const { customer } = useCustomer();
 
-	const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-		evt.preventDefault();
+	const handleSubmit = useCallback(
+		(evt: React.FormEvent<HTMLFormElement>) => {
+			evt.preventDefault();
 
-		if (!customer || customer.status !== 'paid') {
-			router.push(`/signup`);
-			return;
-		}
+			if (customer?.status !== 'active') {
+				router.push(`/signup`);
+				return;
+			}
 
-		const url = inputRef?.current?.value;
-		if (url) {
-			router.push(`/results?url=${url}`);
-		}
-	};
+			const url = inputRef?.current?.value;
+			if (url) {
+				inputRef?.current.blur();
+				inputRef.current.value = '';
+
+				router.push(`/results?url=${url}`);
+			}
+		},
+		[customer, inputRef, router]
+	);
 
 	return {
 		inputRef,
