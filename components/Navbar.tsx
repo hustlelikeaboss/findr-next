@@ -82,7 +82,7 @@ export default function Navbar() {
 								<a className='dropdown-item' href='/profile'>
 									<i className='far fa-user pr-2'></i>Profile
 								</a>
-								<a className='dropdown-item' href='#'>
+								<a className='dropdown-item' href='/coming-soon'>
 									<i className='far fa-bookmark pr-2'></i>Library
 								</a>
 								<a className='dropdown-item' href='/subscription'>
