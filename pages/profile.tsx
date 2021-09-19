@@ -49,6 +49,7 @@ export default function Profile({}) {
 										value={session?.user?.name}
 										className='form-control'
 										aria-describedby='inputGroupPrepend2'
+										readOnly
 									/>
 								</div>
 							</div>
@@ -72,6 +73,7 @@ export default function Profile({}) {
 										value={session?.user?.email}
 										aria-describedby='inputGroupPrepend'
 										required
+										readOnly
 									/>
 								</div>
 							</div>

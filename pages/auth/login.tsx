@@ -1,4 +1,4 @@
-import { getProviders, signIn, ClientSafeProvider } from 'next-auth/client';
+import { getProviders, signIn, ClientSafeProvider, useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -31,7 +31,9 @@ export function LogInCard() {
 		const { hash } = window?.location;
 		const params = new URLSearchParams(hash);
 		const key = params.get('error');
-		setAuthError(authErrors[key]);
+		if (key) {
+			setAuthError(authErrors[key]);
+		}
 	});
 
 	return (
@@ -107,6 +109,13 @@ export function LogInCard() {
 }
 
 export default function Login() {
+	const [session, loading] = useSession();
+	const router = useRouter();
+	useEffect(() => {
+		if (!loading && session && router.query.callbackUrl) {
+			router.replace(router.query.callbackUrl as string);
+		}
+	}, [loading, session, router]);
 	return (
 		<main
 			id='login'
