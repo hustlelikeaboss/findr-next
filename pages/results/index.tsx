@@ -25,7 +25,17 @@ export default function Results() {
 								</a>
 							</p>
 							{error ? (
-								<div className='mt-5'>Failed to load website details: {error?.toString()}</div>
+								<div className='mt-5'>
+									{error?.status === 402 ? (
+										<p>
+											You have exceeded monthly search quota. Please check back in a month, or{' '}
+											<a href='/subscription'>upgrade your subscription</a> to enjoy unlimited
+											searches .
+										</p>
+									) : (
+										<p>Failed to load website details: {error?.toString()}.</p>
+									)}
+								</div>
 							) : !details ? (
 								<div className='mt-5'>Loading...</div>
 							) : (
