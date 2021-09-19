@@ -9,7 +9,7 @@ export default function Profile({}) {
 				<div
 					className='col-lg-6 col-md-12'
 					style={{
-						background: `url('/images/photo-24.jpg') center center no-repeat`,
+						background: `url('/images/clarisse-meyer.jpeg') center center no-repeat`,
 						backgroundSize: 'cover',
 						minHeight: '100vh',
 					}}
@@ -46,7 +46,7 @@ export default function Profile({}) {
 									<input
 										type='text'
 										id='name'
-										value={session?.user?.name}
+										value={session?.user?.name || ''}
 										className='form-control'
 										aria-describedby='inputGroupPrepend2'
 										readOnly

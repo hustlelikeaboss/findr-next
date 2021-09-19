@@ -25,7 +25,7 @@ export default function Subscription() {
 				<div
 					className='col-lg-6 col-md-12'
 					style={{
-						background: `url('images/photo-41.jpg') center center no-repeat`,
+						background: `url('images/jen-p.jpeg') center center no-repeat`,
 						backgroundSize: 'cover',
 						minHeight: '100vh',
 					}}
@@ -155,11 +155,7 @@ function SubscriptionDetails({ subscriptionId }: { subscriptionId?: string }) {
 							required
 						>
 							{plans.map((p) => (
-								<option
-									key={p.level}
-									value={p.stripePriceId}
-									
-								>
+								<option key={p.level} value={p.stripePriceId}>
 									{p.name} - {p.cost ? `$${p.cost}` : 'free'}
 								</option>
 							))}
