@@ -1,8 +1,10 @@
 import { signIn, signOut, useSession } from 'next-auth/client';
+import { useRouter } from 'next/router';
 import { useSearch } from '~/hooks/search';
 
 export default function Navbar() {
 	const [session] = useSession();
+	const router = useRouter();
 	const { inputRef, handleSubmit } = useSearch();
 
 	return (
@@ -32,31 +34,32 @@ export default function Navbar() {
 					</ul>
 				) : (
 					<ul className='navbar-nav ml-auto pt-3'>
-						<li className='nav-item mx-1'>
-							<form
-								className='needs-validation d-none d-md-block'
-								onSubmit={handleSubmit}
-								noValidate
-							>
-								<div className='form-row mb-4'>
-									<div className='col-lg-12 col-md-8 col-sm-12 pr-2'>
-										<input
-											className='form-control pl-3'
-											style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem' }}
-											type='url'
-											id='search-box'
-											ref={inputRef}
-											name='url'
-											placeholder='Search'
-											aria-required='true'
-											required
-										/>
-										<div className='invalid-feedback'>Please provide a valid URL.</div>
+						{router?.pathname !== '/search' && (
+							<li className='nav-item mx-1'>
+								<form
+									className='needs-validation d-none d-md-block'
+									onSubmit={handleSubmit}
+									noValidate
+								>
+									<div className='form-row mb-4'>
+										<div className='col-lg-12 col-md-8 col-sm-12 pr-2'>
+											<input
+												className='form-control pl-3'
+												style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem' }}
+												type='url'
+												id='search-box'
+												ref={inputRef}
+												name='url'
+												placeholder='Search'
+												aria-required='true'
+												required
+											/>
+										</div>
 									</div>
-								</div>
-								<input type='submit' style={{ display: 'none' }} />
-							</form>
-						</li>
+									<input type='submit' style={{ display: 'none' }} />
+								</form>
+							</li>
+						)}
 						<li className='nav-item mx-1 dropdown active'>
 							<a
 								className='nav-link btn btn-warning dropdown-toggle'
@@ -79,7 +82,7 @@ export default function Navbar() {
 								<a className='dropdown-item' href='/profile'>
 									<i className='far fa-user pr-2'></i>Profile
 								</a>
-								<a className='dropdown-item' href='#'>
+								<a className='dropdown-item' href='/coming-soon'>
 									<i className='far fa-bookmark pr-2'></i>Library
 								</a>
 								<a className='dropdown-item' href='/subscription'>

@@ -1,9 +1,10 @@
-import React, { CSSProperties, useCallback, useState } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/client';
 
 import loadClientStripe from '~/lib/stripe/client-side';
 import { safePost } from '~/lib/api-helpers';
 import useCustomer from '~/hooks/customer';
+import { useRouter } from 'next/router';
 
 export default function SignUp() {
 	return (
@@ -52,6 +53,16 @@ export const plans: Plan[] = [
 ];
 
 export function Plans({ style }: { style?: CSSProperties }) {
+	const [session] = useSession();
+	const { customer, loading } = useCustomer();
+
+	const router = useRouter();
+	useEffect(() => {
+		if (customer?.subscriptionId && customer.status === 'active' && router.pathname === '/signup') {
+			router.replace('/subscription');
+		}
+	}, [customer, router]);
+
 	return (
 		<div className='py-5 bg-light' style={style}>
 			<div className='container py-5 my-5'>
@@ -67,7 +78,13 @@ export function Plans({ style }: { style?: CSSProperties }) {
 					<div className='col-lg-12 col-md-12 mx-lg-auto'>
 						<div className='card-group'>
 							{plans.map((p) => (
-								<PlanCard plan={p} key={p.level} />
+								<PlanCard
+									key={p.level}
+									plan={p}
+									loading={loading}
+									email={session?.user?.email}
+									customerId={customer?.customerId}
+								/>
 							))}
 						</div>
 					</div>
@@ -85,18 +102,27 @@ export function Plans({ style }: { style?: CSSProperties }) {
 	);
 }
 
-function PlanCard({ plan }: { plan: Plan }) {
-	const [session] = useSession();
+function PlanCard({
+	plan,
+	loading,
+	email,
+	customerId,
+}: {
+	plan: Plan;
+	loading?: boolean;
+	email?: string;
+	customerId?: string;
+}) {
 	const [redirecting, setRedirecting] = useState<boolean>(false);
-	const { customer, loading, error } = useCustomer();
+
 	const subscribe = useCallback(async () => {
 		if (loading) return;
 
 		setRedirecting(true);
 		const response = await safePost('/api/stripe/checkout-sessions', {
 			priceId: plan.stripePriceId,
-			email: session?.user?.email,
-			customerId: customer?.customerId,
+			email,
+			customerId,
 		});
 
 		if (response.statusCode === 500) {
@@ -114,7 +140,7 @@ function PlanCard({ plan }: { plan: Plan }) {
 			console.warn(error.message);
 			setRedirecting(false);
 		}
-	}, [loading, plan, session, customer]);
+	}, [loading, plan, email, customerId]);
 
 	return (
 		<div className='card mb-3 text-center' key={plan.level}>

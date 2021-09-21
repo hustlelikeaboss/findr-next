@@ -14,10 +14,9 @@ export default function Subscription() {
 	const router = useRouter();
 
 	if (loading) return <p>Loading</p>;
-
 	if (!customer) {
 		router.push(`/signup`);
-		return;
+		return null;
 	}
 
 	return (
@@ -26,27 +25,27 @@ export default function Subscription() {
 				<div
 					className='col-lg-6 col-md-12'
 					style={{
-						background: `url('images/photo-41.jpg') center center no-repeat`,
+						background: `url('images/jen-p.jpeg') center center no-repeat`,
 						backgroundSize: 'cover',
 						minHeight: '100vh',
 					}}
 				></div>
 				<div className='col-lg-4 col-md-8 col-sm-12 py-5 m-auto'>
 					<h2 className='text-center display-4 mb-5'>Subscription</h2>
-					{/* 
+
 					{loading ? (
-						<p>Fetching your subscription from Stripe...</p>
+						<p>Fetching your subscription...</p>
 					) : error ? (
 						<p>Data fetch failed: {error.message}. Please try again later.</p>
-					) : ( */}
-					<>
-						<SubscriptionDetails subscriptionId={customer?.subscriptionId} />
+					) : (
+						<>
+							<SubscriptionDetails subscriptionId={customer?.subscriptionId} />
 
-						<SubscriptionHistory customerId={customer?.customerId} />
+							<SubscriptionHistory customerId={customer?.customerId} />
 
-						<ManageSubscription email={customer?.email} />
-					</>
-					{/* )} */}
+							<ManageSubscription email={customer?.email} />
+						</>
+					)}
 				</div>
 			</div>
 		</main>
@@ -93,27 +92,27 @@ async function fetchSubscriptionById(subscriptionId: string): Promise<Stripe.Sub
 	}
 }
 
-const fetchSubscriptions = (customerId: string) => async (
-	status?: string
-): Promise<Stripe.Subscription[]> => {
-	if (!customerId) {
-		return;
-	}
-
-	try {
-		const res = await fetch(
-			`/api/stripe/subscriptions?customerId=${customerId}${status ? `&status=${status}` : ''}`
-		);
-		if (res.status != 200) {
-			console.log('Error: ', res.statusText);
+const fetchSubscriptions =
+	(customerId: string) =>
+	async (status?: string): Promise<Stripe.Subscription[]> => {
+		if (!customerId) {
 			return;
 		}
-		return res?.json();
-	} catch (e) {
-		console.log('e: ', e);
-		return;
-	}
-};
+
+		try {
+			const res = await fetch(
+				`/api/stripe/subscriptions?customerId=${customerId}${status ? `&status=${status}` : ''}`
+			);
+			if (res.status != 200) {
+				console.log('Error: ', res.statusText);
+				return;
+			}
+			return res?.json();
+		} catch (e) {
+			console.log('e: ', e);
+			return;
+		}
+	};
 
 function timestampToDateString(timestamp: number, fallback = ''): string {
 	return timestamp ? new Date(timestamp * 1000).toLocaleDateString() : fallback;
@@ -152,14 +151,11 @@ function SubscriptionDetails({ subscriptionId }: { subscriptionId?: string }) {
 							className='form-control'
 							id='exampleFormControlSelect1'
 							aria-describedby='inputGroupPrepend'
+							defaultValue={subscription.items.data[0].price.id}
 							required
 						>
 							{plans.map((p) => (
-								<option
-									key={p.level}
-									value={p.stripePriceId}
-									selected={p.stripePriceId === subscription.items.data[0].price.id}
-								>
+								<option key={p.level} value={p.stripePriceId}>
 									{p.name} - {p.cost ? `$${p.cost}` : 'free'}
 								</option>
 							))}
@@ -204,8 +200,6 @@ function SubscriptionHistory({ customerId }: { customerId?: string }) {
 	if (!customerId) return null;
 	if (error) return <div>Failed</div>;
 	if (!subscriptions) return <div>Loading</div>;
-
-	console.log('customer has', subscriptions.length, 'active subscriptions');
 
 	return (
 		<div className='mt-3'>

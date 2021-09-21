@@ -48,7 +48,7 @@ export default function Search() {
 										required
 										autoFocus
 									/>
-									<div className='invalid-feedback text-left'>Please provide a valid URL.</div>
+									{/* <div className='invalid-feedback text-left'>Please provide a valid URL.</div> */}
 								</div>
 								<div className='col-lg-3 col-md-3 col-sm-12 pb-2 mx-auto mr-lg-auto ml-lg-0'>
 									<button className='btn btn-warning btn-lg w-100 border-0 rounded-0' type='submit'>

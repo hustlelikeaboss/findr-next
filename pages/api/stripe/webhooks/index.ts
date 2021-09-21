@@ -64,6 +64,29 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 			} catch (e) {
 				console.log('e: ', e);
 			}
+		} else if (event.type === 'customer.updated') {
+			const customer = event.data.object as Stripe.Customer;
+			console.log(`💵 customer.updated: ${customer.id}`);
+			try {
+				const customerInDB = await CustomerRepo.findOneByEmail(customer.email);
+				if (!customerInDB) {
+					console.log(`💵 customer doesn't existing in database, creating`);
+					CustomerRepo.create({
+						email: customer.email,
+						customerId: customer.id,
+						...subscriptionToCustomer(customer.subscriptions?.[0]),
+					});
+				} else {
+					CustomerRepo.updateByCustomerId({
+						id: customerInDB.id,
+						email: customer.email,
+						customerId: customer.id,
+						...subscriptionToCustomer(customer.subscriptions?.[0]),
+					});
+				}
+			} catch (e) {
+				console.log('e: ', e);
+			}
 		} else if (event.type === 'checkout.session.completed') {
 			const session = event.data.object as Stripe.Checkout.Session;
 			console.log(`💵 checkout.session.completed: ${session.id}`);
@@ -107,7 +130,8 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-function subscriptionToCustomer(subscription: Stripe.Subscription): Partial<Customer> {
+function subscriptionToCustomer(subscription?: Stripe.Subscription): Partial<Customer> {
+	if (!subscription) return {};
 	return {
 		customerId: subscription.customer as string,
 		subscriptionId: subscription.id,

@@ -23,8 +23,9 @@ export async function safeGet(url: string) {
 	try {
 		res = await fetch(url);
 	} catch (err) {
-		console.log('safeGet err: ', err?.message);
-		throw new Error(err?.message);
+		const error = new Error(err?.message) as any;
+		error.status = res.status;
+		throw error;
 	}
 
 	if (res.ok) {
@@ -46,11 +47,15 @@ export async function safePost(url: string, data: { [key: string]: any }) {
 			body: JSON.stringify(data || {}),
 		});
 	} catch (err) {
-		throw new Error(err?.message);
+		const error = new Error(err?.message) as any;
+		error.status = res.status;
+		throw error;
 	}
 
-	if (res.ok) {
-		return res.json();
+	if (!res.ok) {
+		const error = new Error(await res?.text()) as any;
+		error.status = res.status;
+		throw error;
 	}
-	throw new Error(await res?.text());
+	return res.json();
 }
