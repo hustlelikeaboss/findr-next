@@ -127,8 +127,20 @@ function SubscriptionDetails({ subscriptionId }: { subscriptionId?: string }) {
 	const { manageSubscription, error: initCustomerPortalError } = useCustomerPortal();
 
 	if (!subscriptionId) return null;
-	if (fetchSubscriptionByIdError) return <div>Failed to load subscription details</div>;
-	if (initCustomerPortalError) return <div>Failed to init customer portal</div>;
+	if (fetchSubscriptionByIdError)
+		return (
+			<div>
+				Failed to load subscription details:{' '}
+				<span className='text-danger'>{fetchSubscriptionByIdError?.message}</span>.
+			</div>
+		);
+	if (initCustomerPortalError)
+		return (
+			<div>
+				Failed to init Stripe customer portal:{' '}
+				<span className='text-danger'>{initCustomerPortalError?.message}</span>.
+			</div>
+		);
 	if (!subscription) return <div>Loading</div>;
 
 	const { status, start_date, trial_end } = subscription;
@@ -233,7 +245,13 @@ function SubscriptionHistory({ customerId }: { customerId?: string }) {
 
 function ManageSubscription({ email }: { email?: string }) {
 	const { error, manageSubscription } = useCustomerPortal();
-	if (error) return <p>Failed to init customer portal: {error?.toString()}</p>;
+	if (error)
+		return (
+			<p>
+				Failed to init Stripe customer portal: <span className='text-danger'>{error?.message}</span>
+				.
+			</p>
+		);
 
 	return (
 		<div className='mt-3'>
