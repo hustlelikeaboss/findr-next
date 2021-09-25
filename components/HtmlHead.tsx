@@ -29,6 +29,12 @@ export default function HtmlHead() {
 				content='https://cdn.jsdelivr.net/gh/hustlelikeaboss/assets/img/findr-screenshot.png'
 			/>
 
+			{/* favicons */}
+			<link rel='apple-touch-icon' sizes='180x180' href='/favicons/apple-touch-icon.png' />
+			<link rel='icon' type='image/png' sizes='32x32' href='/favicons/favicon-32x32.png' />
+			<link rel='icon' type='image/png' sizes='16x16' href='/favicons/favicon-16x16.png' />
+			<link rel='manifest' href='/favicons/site.webmanifest' />
+
 			{/* stylesheets */}
 			<link
 				href='https://fonts.googleapis.com/css?family=Montserrat:200,200i,300,300i,400,400i,500,500i,600,600i'
@@ -76,4 +82,4 @@ export default function HtmlHead() {
 			<script src='/js/select2.js'></script>
 		</Head>
 	);
-};
+}
