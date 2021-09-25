@@ -27,7 +27,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				}
 
 				// redirect link from the portal.
-				const returnUrl = `${process.env.VERCEL_URL}/subscription`;
+				const returnUrl =
+					process.env.STRIPE_PORTAL_RETURN_URL || `https://${process.env.VERCEL_URL}/subscription`;
 
 				const { url } = await initServerStripe().billingPortal.sessions.create({
 					customer: customerId,
