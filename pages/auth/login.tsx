@@ -44,38 +44,10 @@ export function LogInCard() {
 			<div className='card-body pt-4 px-5 pb-1'>
 				<div className='text-danger pb-1'>{authError}</div>
 
-				{/* social login */}
-				<ul className='list-inline pb-2 mx-3'>
-					{Object.values(providers)
-						.filter((provider) => provider.id !== 'email')
-						.map((provider) => (
-							<li className='list-item' key={provider.id}>
-								<div className='input-group my-2'>
-									<div className='input-group-prepend'>
-										<div className='input-group-text'>
-											<i
-												className={`fab fa-${provider.id} fa-fw text-info h3`}
-												title={`Login using ${provider.name}`}
-											/>
-										</div>
-									</div>
-									<input
-										type='button'
-										className='form-control social-login btn btn-outline-info'
-										value={provider.name}
-										onClick={() => signIn(provider.id)}
-									/>
-								</div>
-							</li>
-						))}
-				</ul>
-
-				<hr />
-
 				{/* email login */}
 				<form
 					method='POST'
-					className='pt-3 pb-2 mx-3 needs-validation'
+					className='pt-3 mx-3 needs-validation'
 					noValidate
 					onSubmit={doEmailLogin}
 				>
@@ -91,17 +63,34 @@ export function LogInCard() {
 							required
 						/>
 						<div className='invalid-feedback'>Please provide a valid email address.</div>
+						<button className='btn btn-lg btn-warning mb-3 w-100' type='submit'>
+							Send Me the Magic Link
+						</button>
 					</div>
-					<button className='btn btn-lg btn-warning mb-3 w-100' type='submit'>
-						Send Me the Magic Link
-					</button>
 				</form>
+
+				{/* social login */}
+				<ul className='list-inline pb-2 d-flex justify-content-center'>
+					{Object.values(providers)
+						.filter((provider) => provider.id !== 'email')
+						.map((provider) => (
+							<li className='list-inline-item' key={provider.id}>
+								<a href='#' onClick={() => signIn(provider.id)}>
+									<i
+										className={`fab fa-${provider.id} fa-fw text-info h3`}
+										title={`Login using ${provider.name}`}
+									/>
+								</a>
+							</li>
+						))}
+				</ul>
+
+				<hr />
 			</div>
 
 			<div className='card-footer '>
 				<p className='text-center text-secondary px-5'>
-					<small>No need to create an account or remember yet another password {` `}</small>
-					<i className='far fa-smile' />
+					<small>No need to sign up or remember yet another password!</small>
 				</p>
 			</div>
 		</div>
