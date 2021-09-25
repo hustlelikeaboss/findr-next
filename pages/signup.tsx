@@ -14,10 +14,15 @@ export default function SignUp() {
 	);
 }
 
+type Feature = {
+	description: string;
+	active: boolean;
+};
+
 export type Plan = {
 	level: number;
 	name: string;
-	features: string[];
+	features: Feature[];
 	cost: number;
 	stripePriceId?: string;
 	highlighted?: boolean;
@@ -28,14 +33,19 @@ export const plans: Plan[] = [
 		level: 1,
 		stripePriceId: process.env.NEXT_PUBLIC_PLAN_FREE,
 		name: 'Genin',
-		features: ['10 searches a month'],
+		features: [
+			{
+				description: '10 searches a month',
+				active: true,
+			},
+		],
 		cost: 0,
 	},
 	{
 		level: 2,
 		stripePriceId: process.env.NEXT_PUBLIC_PLAN_BASIC,
 		name: 'Chuunin',
-		features: ['Unlimited searches'],
+		features: [{ description: 'Unlimited searches', active: true }],
 		cost: 2.99,
 		highlighted: true,
 	},
@@ -44,9 +54,12 @@ export const plans: Plan[] = [
 		stripePriceId: process.env.NEXT_PUBLIC_PLAN_PREMIUM,
 		name: 'Jounin',
 		features: [
-			'Unlimited searches',
-			'Template identification based on computer vision',
-			'Personal library with favorites, categories, tags, and notes',
+			{ description: 'Unlimited searches', active: true },
+			{
+				description: 'Personal library with favorites, categories, tags, and notes',
+				active: false,
+			},
+			// { description: 'Template identification based on computer vision', active: false },
 		],
 		cost: 4.99,
 	},
@@ -147,14 +160,21 @@ function PlanCard({
 			<div className='card-body'>
 				<h5 className='text-secondary mt-3 mb-4'>
 					{plan.name}
-					{plan.highlighted && (
-						<span className='badge badge-pill badge-secondary ml-2'>Popular</span>
-					)}
+					{plan.highlighted && <span className='badge badge-pill badge-info ml-2'>Popular</span>}
 				</h5>
 				{plan.features.map((f, i) => (
 					<p className='lead mb-3 text-secondary mx-4' key={i}>
-						<i className='fas fa-check fa-xs text-success mr-2' />
-						{f}
+						{f.active ? (
+							<>
+								<i className='fas fa-check fa-xs text-success mr-2' />
+								{f.description}
+							</>
+						) : (
+							<>
+								<span className='badge badge-pill badge-secondary mr-2'>Coming soon</span>
+								<i style={{ fontSize: '0.95rem' }}>{f.description}</i>
+							</>
+						)}
 					</p>
 				))}
 			</div>
